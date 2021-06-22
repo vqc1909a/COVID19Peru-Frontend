@@ -67,11 +67,11 @@ const HeaderMobile = (props) => {
             </Link>
           </li>
           <li style={ruta === '/nosotros' ? {borderTop: `3px solid ${specialColor}`} : {}}>
-            <Link to="/nosotros" className="flex">
+            <Link to="/api" className="flex">
               <svg width="25" height="25" viewBox="0 0 27 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path className={darkMode ? 'text-secondary-dark' : 'text-secondary'} style={ruta === '/nosotros' ? {fill: `${specialColor}`} : {}} d="M13.454 0.639404C6.094 0.639404 0.120667 6.61274 0.120667 13.9727C0.120667 21.3327 6.094 27.3061 13.454 27.3061C20.814 27.3061 26.7873 21.3327 26.7873 13.9727C26.7873 6.61274 20.814 0.639404 13.454 0.639404ZM13.454 4.6394C15.6673 4.6394 17.454 6.42607 17.454 8.6394C17.454 10.8527 15.6673 12.6394 13.454 12.6394C11.2407 12.6394 9.454 10.8527 9.454 8.6394C9.454 6.42607 11.2407 4.6394 13.454 4.6394ZM13.454 23.5727C11.8698 23.5727 10.3102 23.1807 8.91437 22.4316C7.5185 21.6825 6.3297 20.5996 5.454 19.2794C5.494 16.6261 10.7873 15.1727 13.454 15.1727C16.1073 15.1727 21.414 16.6261 21.454 19.2794C20.5783 20.5996 19.3895 21.6825 17.9936 22.4316C16.5978 23.1807 15.0382 23.5727 13.454 23.5727Z" fill="#544A4A"/>
               </svg>
-              <span className={darkMode ? 'text-secondary-dark' : 'text-secondary'} style={ruta === '/nosotros' ? {color: `${specialColor}`} : {}}>Nosotros</span>
+              <span className={darkMode ? 'text-secondary-dark' : 'text-secondary'} style={ruta === '/nosotros' ? {color: `${specialColor}`} : {}}>API</span>
             </Link>
           </li>
         </ul>
