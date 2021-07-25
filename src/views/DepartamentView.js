@@ -12,12 +12,16 @@ import DetailsEtapaHome from '../components/Home/DetailsEtapaHome';
 import BigSpinner from '../components/BigSpinner';
 import ScrollUp from '../components/ScrollUp';
 import Footer from '../components/layouts/Footer';
+import useSeo from '../hooks/useSeo';
+
 const DepartamentView = (props) => {
 
 const {darkMode} = useContext(DarkModeContext);  
 const {departamento, provincia, mapaDepartamento, latLngCenter, nivelZoom, nivelZoomDesktop, latLngCenterDesktop} = useContext(DepartamentoContext);  
 const [provinciasOrdenadas, setProvinciasOrdenadas] = useState([]);
-  
+
+useSeo({title: `${departamento.name} | API Covid19 - Perú`})
+
 useEffect(()=>{
   if(Object.keys(departamento).length !== 0){
     let provincias = departamento.provincias.sort((a, b) => b.positivos - a.positivos).slice(0, 5)

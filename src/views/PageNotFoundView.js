@@ -2,6 +2,7 @@ import React, {useMemo, useContext, Fragment} from 'react';
 import styled from '@emotion/styled';
 import {DarkModeContext} from '../context/DarkModeContext';
 import Footer from '../components/layouts/Footer';
+import useSeo from '../hooks/useSeo'
 
 const PageNotFound = () => {
   const {darkMode} = useContext(DarkModeContext); 
@@ -145,6 +146,7 @@ const PageNotFound = () => {
     `
   }, [])
 
+  useSeo({title: "Page Not Found | API Covid19 - Perú"})
   return (
     <Fragment>
       <PageNotFoundContainer className={darkMode ? 'background-dark' : 'background'}>

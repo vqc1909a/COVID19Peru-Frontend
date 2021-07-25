@@ -165,7 +165,7 @@ const Header = () => {
     
       <div className="navbar container">
         <div className="logo">
-          <Link to="/">
+          <Link to="/" without="true">
               <img src="/icons/logo.svg" alt="logo"></img>
               <h1 className={`text-medium ${darkMode ? 'text-secondary-dark' : 'text-secondary'}`}>Covid19-Perú</h1>
           </Link>
@@ -173,13 +173,13 @@ const Header = () => {
         <nav className="nav">
           <ul>
             <li>
-              <Link to="/mapa" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>Mapa</Link>
+              <Link to="/mapa" without="true" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>Mapa</Link>
             </li>
             <li>
-              <Link to="/busqueda" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>Explorar</Link>
+              <Link to="/busqueda" without="true" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>Explorar</Link>
             </li>
             <li>
-              <Link to="/api" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>API</Link>
+              <Link to="/api" without="true" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>API</Link>
             </li>
             <li>
               <div className={darkMode ? 'div-dark' : ''}>

@@ -10,14 +10,15 @@ import DetailsTotalHome from '../components/Home/DetailsTotalHome';
 import DetailsEtapaHome from '../components/Home/DetailsEtapaHome';
 import ScrollUp from '../components/ScrollUp';
 import Footer from '../components/layouts/Footer';
+import useSeo from '../hooks/useSeo';
 
 
 const Home = () => {
   const {darkMode} = useContext(DarkModeContext);  
   const {peru} = useContext(PeruContext);
 
+  useSeo({title: "API Covid19 - Perú", description: "Servicio de API, que te provee toda la información necesaria sobre el estado del COVID-19 a nivel nacional, departamental y provincial en el Perú"})
   
-
   const Section1Container = useMemo(()=> {
     return styled.section`
       transition: background-color .5s ease-in-out;

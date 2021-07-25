@@ -7,14 +7,15 @@ import TableDesktop from '../components/Search/TableDesktop';
 import TableMobile from '../components/Search/TableMobile';
 import { DarkModeContext } from '../context/DarkModeContext';
 import { DepartamentoContext } from '../context/DepartamentoContext';
-
+import useSeo from '../hooks/useSeo';
 
 const SearchView = () => {
   const {departamentos} = useContext(DepartamentoContext);
   const [departamentosOrdenados, setDepartamentosOrdenados] = useState([]);
   const { darkMode } = useContext(DarkModeContext);
 
-
+  useSeo({title: "Búsqueda | API Covid19 - Perú"})
+  
   useEffect(() => {
     if(departamentos.length !== 0){
        setDepartamentosOrdenados(departamentos.sort((a, b) => b.positivos - a.positivos));

@@ -2,6 +2,7 @@ import React, {useMemo, useRef} from 'react';
 import styled from '@emotion/styled';
 import MainContent from '../components/Developer/MainContent';
 import Aside from '../components/Developer/Aside';
+import useSeo from '../hooks/useSeo';
 
 const Developer = () => {
   const main_content = useRef();
@@ -157,6 +158,8 @@ const Developer = () => {
       }
     `
   }, []); 
+  
+  useSeo({title: "Developer | API Covid19 - Perú"})
 
   const scrollDown = (e) => {
     const height_navbar = document.querySelector(".navbar").getBoundingClientRect().height;  

@@ -40,7 +40,7 @@ const MainContent = ({main_content}) => {
       <h2 className={`text-medium ${darkMode ? 'text-primary': 'text-primary-dark'}`} style={{letterSpacing: "6px"}}>País Endpoints</h2>
       <hr className={`${darkMode ? '': 'dark-mode'}`} />
       <div className="code">
-        <h3 className={`pais text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Obtener estado del país</h3>
+        <h3 className={`pais text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Obtener estado actual del país</h3>
         <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información detallada del país.</p>
         <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/pais</p></div>
         <div className="response">
@@ -81,8 +81,8 @@ const MainContent = ({main_content}) => {
       <div className="code limit-pais">
         <h3 className={`text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Limit</h3>
         <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Utilice un parámetro query "limit" para obtener el estado del COVID19 en los últimos n°días del país.</p>
-        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/pais?limit=10</p></div>
-        <p className={`code__down text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: La cantidad máxima de días que se puede especificar es de 10 por el momento</b></p>
+        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/pais?limit=100</p></div>
+        <p className={`code__down text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: La cantidad máxima de días que se puede especificar es de 100 por el momento</b></p>
       </div>
       
       <div className="code attributes-pais">
@@ -222,12 +222,12 @@ const MainContent = ({main_content}) => {
       <hr className={`${darkMode ? '': 'dark-mode'}`} />
       <div className="code all-departamento">
         <h3 className={`text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Obtener todos los departamentos</h3>
-        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información de todos los departamentos.</p>
+        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información actual de todos los departamentos.</p>
         <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/departamentos</p></div>
       </div>
       <div className="code name-departamento">
         <h3 className={`text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Obtener departamento por nombre</h3>
-        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para solicitar un departamento por nombre, como "San martin" ó "Madre de Dios".</p>
+        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información actual de un departamento por nombre, como "San martin" ó "Madre de Dios".</p>
         <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/departamentos/san martin</p></div>
         <p className={`code__down text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: Estos nombres no deben de llevar tilde</b></p>
         <div className="response">
@@ -307,8 +307,8 @@ const MainContent = ({main_content}) => {
       <div className="code limit-departamento">
         <h3 className={`text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Limit</h3>
         <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Utilice un parámetro query "limit" para obtener el estado del COVID19 en los últimos n°días del departamento especificado.</p>
-        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/departamentos/san martin?limit=10</p></div>
-        <p className={`code__down text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: La cantidad máxima de días que se puede especificar es de 10 por el momento</b></p>
+        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/departamentos/san martin?limit=100</p></div>
+        <p className={`code__down text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: La cantidad máxima de días que se puede especificar es de 100 por el momento</b></p>
       </div>
 
       
@@ -443,12 +443,12 @@ const MainContent = ({main_content}) => {
       <hr className={`${darkMode ? '': 'dark-mode'}`} />
       <div className="all-provincia code">
         <h3 className={`text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Obtener todas los provincias</h3>
-        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información de todas las provincias.</p>
+        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información actual de todas las provincias.</p>
         <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/provincias</p></div>
       </div>
       <div className="name-provincia code">
         <h3 className={`text-normal-bg ${darkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Obtener provincia por nombre</h3>
-        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para solicitar una provincia por nombre, como "Huaura" ó "Junin".</p>
+        <p className={`code__up text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información actual de una provincia por nombre, como "Huaura" ó "Junin".</p>
         <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/provincias/san antonio de putina</p></div>
         <p className={`code__down text-normal ${darkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: Estos nombres no deben de llevar tilde</b></p>
         <div className="response">

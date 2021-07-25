@@ -31,6 +31,7 @@ import {ucayali} from '../data/ucayali.json';
 import { MapContainer, GeoJSON, useMapEvent, TileLayer, LayersControl, Marker, Popup, useMapEvents} from 'react-leaflet';
 import BigSpinner from '../components/BigSpinner';
 import L from 'leaflet';
+import useSeo from '../hooks/useSeo';
 
 import LeyendaMap from  '../components/Map/LeyendaMap';
 
@@ -38,6 +39,8 @@ import LeyendaMap from  '../components/Map/LeyendaMap';
 const MapView = () => {
   const {departamentos}  = useContext(DepartamentoContext);
   const {peru} = useContext(PeruContext);
+
+  useSeo({title: "Mapa | API Covid19 - Perú"})
 
   let mymap;
   const geojsonref = useRef();
