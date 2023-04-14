@@ -3,7 +3,7 @@ import {DarkModeContext} from '../context/DarkModeContext';
 import styled from '@emotion/styled';
 
 const DarkMode = () => {
-  const {darkMode, setDarkMode} = useContext(DarkModeContext);
+  const {isDarkMode, setIsDarkMode} = useContext(DarkModeContext);
 
   const DarkModeContainer = styled.div`
     position: fixed;
@@ -17,7 +17,7 @@ const DarkMode = () => {
   `
   return (
     <DarkModeContainer >
-      <img src={`/icons/${darkMode ? 'sun.svg': 'moon.svg'}`} alt={darkMode ? 'sun-icon' : 'moon-icon'} onClick={() => setDarkMode(!darkMode)} />
+      <img src={`/icons/${isDarkMode ? 'sun.svg': 'moon.svg'}`} alt={isDarkMode ? 'sun-icon' : 'moon-icon'} onClick={() => setIsDarkMode(!isDarkMode)} />
     </DarkModeContainer>  
   );
 }

@@ -2,20 +2,23 @@ import React, {useMemo, useContext, Fragment} from 'react';
 import styled from '@emotion/styled';
 import ContentHome from '../components/Home/ContentHome';
 import MapHome from '../components/Home/MapHome';
-import {DarkModeContext} from '../context/DarkModeContext';
-import {PeruContext} from '../context/PeruContext';
 import BigSpinner from '../components/BigSpinner';
 import DetailsHeaderHome from '../components/Home/DetailsHeaderHome';
 import DetailsTotalHome from '../components/Home/DetailsTotalHome';
 import DetailsEtapaHome from '../components/Home/DetailsEtapaHome';
 import ScrollUp from '../components/ScrollUp';
 import Footer from '../components/layouts/Footer';
+import {PeruContext} from '../context/PeruContext';
+import { DepartamentoContext } from '../context/DepartamentoContext';
+import {DarkModeContext} from '../context/DarkModeContext';
 import useSeo from '../hooks/useSeo';
 
 
 const Home = () => {
-  const {darkMode} = useContext(DarkModeContext);  
+  const {isDarkMode} = useContext(DarkModeContext);  
   const {peru} = useContext(PeruContext);
+  const {departamentos} = useContext(DepartamentoContext);
+
 
   useSeo({title: "API Covid19 - Perú", description: "Servicio de API, que te provee toda la información necesaria sobre el estado del COVID-19 a nivel nacional, departamental y provincial en el Perú"})
   
@@ -61,7 +64,6 @@ const Home = () => {
         display: flex;
         flex-wrap: wrap;
         @media (min-width: 992px){
-          min-height: 90vh;
           width: 90%;
         }        
         .details-total{
@@ -91,26 +93,27 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Section1Container className={darkMode ? 'background-dark' : 'background'}>
+      <Section1Container className={isDarkMode ? 'background-dark' : 'background'}>
         <div className="container">
-          <MapHome result={peru}></MapHome>
-          <ContentHome result={peru} provincia={{}}></ContentHome>
+          <MapHome departamentos={departamentos}></MapHome>
+          <ContentHome peru={peru} provincia={{}}></ContentHome>
         </div>
       </Section1Container>
-      <Section2Container className={darkMode ? 'background-dark' : 'background'}>
+      <Section2Container className={isDarkMode ? 'background-dark' : 'background'}>
         <DetailsHeaderHome></DetailsHeaderHome>
         <div className="container">
           {Object.keys(peru).length !== 0
           ?
           <Fragment>
-            <DetailsTotalHome result={peru} provincia={{}}></DetailsTotalHome> 
+            <DetailsTotalHome peru={peru} provincia={{}}></DetailsTotalHome> 
             <DetailsEtapaHome result={peru} provincia={{}}></DetailsEtapaHome>
           </Fragment> 
           :
           <BigSpinner></BigSpinner>
           }
         </div>
-        <ScrollUp></ScrollUp>
+        <ScrollUp></ScrollUp> 
+        {/* Footer solo para desktop */}
         <Footer></Footer>
       </Section2Container>
     </Fragment>

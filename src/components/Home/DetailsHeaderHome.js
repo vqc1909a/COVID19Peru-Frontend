@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { DarkModeContext } from '../../context/DarkModeContext';
 
 const DetailsHeaderHome = () => {
-  const { darkMode } = useContext(DarkModeContext);
+  const { isDarkMode } = useContext(DarkModeContext);
 
   const DetailsHeaderHomeContent = useMemo(() => {
     return styled.header`
@@ -34,8 +34,8 @@ const DetailsHeaderHome = () => {
   }, []);
   return (
     <DetailsHeaderHomeContent>
-      <div className={`header-icon ${darkMode ? "dark-mode" : "" }`}>
-        <h2 className={`text-medium ${darkMode ? 'special-color-dark' : 'special-color'}`}>Unidos Podemos Más</h2>
+      <div className={`header-icon ${isDarkMode ? "dark-mode" : "" }`}>
+        <h2 className={`text-medium ${isDarkMode ? 'special-color-dark' : 'special-color'}`}>Unidos Podemos Más</h2>
       </div>
     </DetailsHeaderHomeContent>
   );

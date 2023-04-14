@@ -9,7 +9,7 @@ html {
   font-size: 62.5%;
   overflow-x: hidden;
 
-  --text-small: calc(0.5rem + 0.5vw);
+  --text-small: calc(0.6rem + 0.5vw);
   --text-normal: calc(1rem + 0.5vw);
   --text-normal-bg: calc(1.2rem + 0.5vw);
   --text-medium: calc(1.5rem + 0.5vw);
@@ -28,7 +28,7 @@ html {
 }
 @media only screen and (min-width: 992px) {
   html {
-    --text-small: calc(1rem);
+    --text-small: calc(1.1rem);
     --text-normal: calc(1.5rem);
     --text-medium: calc(2rem);
     --text-big: calc(2.5rem);

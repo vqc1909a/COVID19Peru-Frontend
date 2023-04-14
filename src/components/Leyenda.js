@@ -4,7 +4,7 @@ import { DarkModeContext } from '../context/DarkModeContext';
 
 const Leyenda = ({departamento}) => {
 
-  const { darkMode } = useContext(DarkModeContext);
+  const { isDarkMode } = useContext(DarkModeContext);
 
   const LeyendaContainer = useMemo(() => {
       return styled.div`
@@ -40,7 +40,7 @@ const Leyenda = ({departamento}) => {
   
   
   return (
-    <LeyendaContainer className={`text-normal ${darkMode ? 'text-primary-dark' : ' text-primary'}`}>
+    <LeyendaContainer className={`text-normal ${isDarkMode ? 'text-primary-dark' : ' text-primary'}`}>
       <h4>Total de Casos Positivos</h4>
       <div className="barra"></div>
       <div className="casos">

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import {DarkModeContext} from '../../context/DarkModeContext';
 
 const Footer = () => {
- const {darkMode} = useContext(DarkModeContext);
+ const {isDarkMode} = useContext(DarkModeContext);
  const FooterContent = useMemo(()=>{
 
   return styled.footer`
@@ -28,8 +28,8 @@ const Footer = () => {
   `
  }, [])
   return (
-    <FooterContent className={darkMode ? 'dark-mode': ''}>
-      <p className={darkMode ? 'text-primary-dark': 'text-primary'}>Perú - {new Date().getFullYear()}</p>
+    <FooterContent className={isDarkMode ? 'dark-mode': ''}>
+      <p className={isDarkMode ? 'text-primary-dark': 'text-primary'}>Perú - {new Date().getFullYear()}</p>
     </FooterContent>
   );
 }

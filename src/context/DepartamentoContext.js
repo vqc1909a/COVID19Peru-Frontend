@@ -45,34 +45,61 @@ export const DepartamentoProvider = (props) => {
 
   useEffect(()=>{
     (async ()=>{
+      //ESto porque el contexto se renderiza cada vez que cambies de ruta
       if(departamentos.length === 0){
-        const promiseLoreto = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/loreto`);
-        const promiseAmazonas = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/amazonas`);
-        const promiseTumbes = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/tumbes`);
-        const promisePiura = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/piura`);
-        const promiseLambayeque = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/lambayeque`);
-        const promiseCajamarca = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/cajamarca`);
-        const promiseLaLibertad = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/la-libertad`);
-        const promiseAncash = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ancash`);
-        const promiseSanMartin = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/san-martin`);
-        const promiseHuanuco = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/huanuco`);
-        const promiseUcayali = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ucayali`);
-        const promisePasco = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/pasco`);
-        const promiseLima = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/lima`);
-        const promiseJunin = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/junin`);
-        const promiseHuancavelica = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/huancavelica`);
-        const promiseIca = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ica`);
-        const promiseAyacucho = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ayacucho`);
-        const promiseApurimac = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/apurimac`);
-        const promiseCusco = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/cusco`);
-        const promiseMadreDeDios = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/madre-de-dios`);
-        const promisePuno = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/puno`);
-        const promiseArequipa = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/arequipa`);
-        const promiseMoquegua = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/moquegua`);
-        const promiseTacna = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/tacna`);
-        const promiseCallao = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/callao`);
+        const promAmazonas = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/amazonas`);
+        const promAncash = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ancash`);
+        const promApurimac = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/apurimac`);
+        const promArequipa = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/arequipa`);
+        const promAyacucho = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ayacucho`);
+        const promCajamarca = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/cajamarca`);
+        const promCallao = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/callao`);
+        const promCusco = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/cusco`);
+        const promHuancavelica = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/huancavelica`);
+        const promHuanuco = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/huanuco`);
+        const promIca = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ica`);
+        const promJunin = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/junin`);
+        const promLaLibertad = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/la-libertad`);
+        const promLambayeque = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/lambayeque`);
+        const promLima = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/lima`);
+        const promLoreto = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/loreto`);
+        const promMadreDeDios = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/madre-de-dios`);
+        const promMoquegua = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/moquegua`);
+        const promPasco = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/pasco`);
+        const promPiura = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/piura`);
+        const promPuno = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/puno`);
+        const promSanMartin = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/san-martin`);
+        const promTacna = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/tacna`);
+        const promTumbes = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/tumbes`);
+        const promUcayali = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ucayali`);
 
-        const [loreto, amazonas, tumbes, piura, lambayeque, cajamarca, libertad, ancash, sanmartin, huanuco, ucayali, pasco, lima, junin, huancavelica, ica, ayacucho, apurimac, cusco, madrededios, puno, arequipa, moquegua, tacna, callao] = await Promise.all([promiseLoreto, promiseAmazonas, promiseTumbes, promisePiura, promiseLambayeque, promiseCajamarca, promiseLaLibertad, promiseAncash, promiseSanMartin, promiseHuanuco, promiseUcayali, promisePasco, promiseLima, promiseJunin, promiseHuancavelica, promiseIca, promiseAyacucho, promiseApurimac, promiseCusco, promiseMadreDeDios, promisePuno, promiseArequipa, promiseMoquegua, promiseTacna, promiseCallao]  );
+        const [loreto, amazonas, tumbes, piura, lambayeque, cajamarca, libertad, ancash, sanmartin, huanuco, ucayali, pasco, lima, junin, huancavelica, ica, ayacucho, apurimac, cusco, madrededios, puno, arequipa, moquegua, tacna, callao] = await Promise.all([
+          promAmazonas, 
+          promAncash, 
+          promApurimac,
+          promArequipa,
+          promAyacucho,
+          promCajamarca,
+          promCallao,
+          promCusco,
+          promHuancavelica,
+          promHuanuco,
+          promIca,
+          promJunin,
+          promLaLibertad,
+          promLambayeque,
+          promLima,
+          promLoreto,
+          promMadreDeDios,
+          promMoquegua,
+          promPasco,
+          promPiura,
+          promPuno,
+          promSanMartin,
+          promTacna,
+          promTumbes,
+          promUcayali
+        ]);
 
         setDepartamentos([loreto.data, amazonas.data, tumbes.data, piura.data, lambayeque.data, cajamarca.data, libertad.data, ancash.data, sanmartin.data, huanuco.data, ucayali.data, pasco.data, lima.data, junin.data, huancavelica.data, ica.data, ayacucho.data, apurimac.data, cusco.data, madrededios.data, puno.data, arequipa.data, moquegua.data, tacna.data, callao.data]);
 

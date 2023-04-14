@@ -11,7 +11,7 @@ const DetailsEtapaHome = ({result, provincia}) => {
   if(Object.keys(provincia).length !== 0){
     result = provincia
   }
-  const {darkMode} = useContext(DarkModeContext); 
+  const {isDarkMode} = useContext(DarkModeContext); 
   const {loadingDataProvincia} = useContext(DepartamentoContext);
 
   const DetailsEtapaHomeContainer = useMemo(()=>{
@@ -180,7 +180,7 @@ const DetailsEtapaHome = ({result, provincia}) => {
   
   return (
     <DetailsEtapaHomeContainer className="details-etapa flex">
-      <h2 className={`text-big ${darkMode ? 'text-primary-dark' : 'text-primary'}`}>Porcentaje de fallecidos <br></br>por rango etario</h2>
+      <h2 className={`text-big ${isDarkMode ? 'text-primary-dark' : 'text-primary'}`}>Porcentaje de fallecidos <br></br>por rango etario</h2>
       {!loadingDataProvincia
       ?
       
@@ -192,7 +192,7 @@ const DetailsEtapaHome = ({result, provincia}) => {
         <div className="leyenda">
           {etapas.map((etapa, key) => (
             <div className="etapa" key={key}>
-              <p className={darkMode ? 'text-primary-dark' : 'text-primary'}>{etapa.etapa}<br></br><span className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>{etapa.edad}</span></p>
+              <p className={isDarkMode ? 'text-primary-dark' : 'text-primary'}>{etapa.etapa}<br></br><span className={isDarkMode ? 'text-secondary-dark' : 'text-secondary'}>{etapa.edad}</span></p>
               <span className="color" style={{backgroundColor: etapa.color}}></span>
             </div>
           ))}
@@ -206,7 +206,7 @@ const DetailsEtapaHome = ({result, provincia}) => {
         <div className="leyenda">
           {etapas.map((etapa, key) => (
             <div className="etapa" key={key}>
-              <p className={darkMode ? 'text-primary-dark' : 'text-primary'}>{etapa.etapa}<br></br><span className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>{etapa.edad}</span></p>
+              <p className={isDarkMode ? 'text-primary-dark' : 'text-primary'}>{etapa.etapa}<br></br><span className={isDarkMode ? 'text-secondary-dark' : 'text-secondary'}>{etapa.edad}</span></p>
               <span className="color" style={{backgroundColor: etapa.color}}></span>
             </div>
           ))}

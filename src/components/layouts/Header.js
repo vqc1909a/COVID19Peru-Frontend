@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import {DarkModeContext} from '../../context/DarkModeContext';
 import {withRouter, Link} from 'react-router-dom';
 const Header = () => {
-  const {darkMode, setDarkMode} = useContext(DarkModeContext);
+  const {isDarkMode, setIsDarkMode} = useContext(DarkModeContext);
 
   const HeaderContainer = useMemo(() => {
     return styled.header`
@@ -136,7 +136,7 @@ const Header = () => {
     const span = e.currentTarget;
     const img = span.childNodes[0];
     // const mapaBackground = document.querySelector('.leaflet-container');
-    if(!darkMode){     
+    if(!isDarkMode){     
       span.classList.remove('span-mode-light');
       img.classList.remove('imgmodelight');
       span.classList.add('span-mode-dark');
@@ -144,7 +144,7 @@ const Header = () => {
       setTimeout(()=>{
         img.src = "/icons/sundarkmode.svg"
       }, 250)
-      setDarkMode(!darkMode);
+      setIsDarkMode(!isDarkMode);
       // mapaBackground.classList.add('mapa-dark');
 
     }else{
@@ -155,35 +155,35 @@ const Header = () => {
       setTimeout(()=>{
         img.src = "/icons/moondarkmode.svg"
       }, 250)
-      setDarkMode(!darkMode);
+      setIsDarkMode(!isDarkMode);
       // mapaBackground.classList.remove('mapa-dark');
 
     }
   }
   return (
-    <HeaderContainer className={darkMode ? 'background-dark text-primary-dark' : 'background text-primary'}>
+    <HeaderContainer className={isDarkMode ? 'background-dark text-primary-dark' : 'background text-primary'}>
     
       <div className="navbar container">
         <div className="logo">
           <Link to="/" without="true">
               <img src="/icons/logo.svg" alt="logo"></img>
-              <h1 className={`text-medium ${darkMode ? 'text-secondary-dark' : 'text-secondary'}`}>Covid19-Perú</h1>
+              <h1 className={`text-medium ${isDarkMode ? 'text-secondary-dark' : 'text-secondary'}`}>Covid19-Perú</h1>
           </Link>
         </div>
         <nav className="nav">
           <ul>
             <li>
-              <Link to="/mapa" without="true" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>Mapa</Link>
+              <Link to="/mapa" without="true" className={isDarkMode ? 'text-secondary-dark' : 'text-secondary'}>Mapa</Link>
             </li>
             <li>
-              <Link to="/busqueda" without="true" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>Explorar</Link>
+              <Link to="/busqueda" without="true" className={isDarkMode ? 'text-secondary-dark' : 'text-secondary'}>Explorar</Link>
             </li>
             <li>
-              <Link to="/api" without="true" className={darkMode ? 'text-secondary-dark' : 'text-secondary'}>API</Link>
+              <Link to="/api" without="true" className={isDarkMode ? 'text-secondary-dark' : 'text-secondary'}>API</Link>
             </li>
             <li>
-              <div className={darkMode ? 'div-dark' : ''}>
-                <span onClick={(e) => cambiarThema(e)} style={darkMode ? {backgroundColor: "#B7B0B0"} : {backgroundColor: "#544A4A"}}>
+              <div className={isDarkMode ? 'div-dark' : ''}>
+                <span onClick={(e) => cambiarThema(e)} style={isDarkMode ? {backgroundColor: "#B7B0B0"} : {backgroundColor: "#544A4A"}}>
                   <img src='/icons/moondarkmode.svg' alt="moondark-icon" />                  
                 </span>
               </div>
