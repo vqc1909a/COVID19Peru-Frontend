@@ -1,31 +1,31 @@
 import React, {useState, createContext, useEffect} from 'react';
 import axios from 'axios';
 
-import {amazonas} from '../data/amazonas.json';
-import {ancash} from '../data/ancash.json';
-import {apurimac} from '../data/apurimac.json';
-import {arequipa} from '../data/arequipa.json';
-import {ayacucho} from '../data/ayacucho.json';
-import {cajamarca} from '../data/cajamarca.json';
-import {callao} from '../data/callao.json';
-import {cusco} from '../data/cusco.json';
-import {huancavelica} from '../data/huancavelica.json';
-import {huanuco} from '../data/huanuco.json';
-import {ica} from '../data/ica.json';
-import {junin} from '../data/junin.json';
-import {la_libertad} from '../data/la_libertad.json';
-import {lambayeque} from '../data/lambayeque.json';
-import {lima} from '../data/lima.json';
-import {loreto} from '../data/loreto.json';
-import {madre_de_dios} from '../data/madre_de_dios.json';
-import {moquegua} from '../data/moquegua.json';
-import {pasco} from '../data/pasco.json';
-import {piura} from '../data/piura.json';
-import {puno} from '../data/puno.json';
-import {san_martin} from '../data/san_martin.json';
-import {tacna} from '../data/tacna.json';
-import {tumbes} from '../data/tumbes.json';
-import {ucayali} from '../data/ucayali.json';
+import amazonasJSON from '../data/amazonas.json';
+import ancashJSON from '../data/ancash.json';
+import apurimacJSON from '../data/apurimac.json';
+import arequipaJSON from '../data/arequipa.json';
+import ayacuchoJSON from '../data/ayacucho.json';
+import cajamarcaJSON from '../data/cajamarca.json';
+import callaoJSON from '../data/callao.json';
+import cuscoJSON from '../data/cusco.json';
+import huancavelicaJSON from '../data/huancavelica.json';
+import huanucoJSON from '../data/huanuco.json';
+import icaJSON from '../data/ica.json';
+import juninJSON from '../data/junin.json';
+import la_libertadJSON from '../data/la_libertad.json';
+import lambayequeJSON from '../data/lambayeque.json';
+import limaJSON from '../data/lima.json';
+import loretoJSON from '../data/loreto.json';
+import madre_de_diosJSON from '../data/madre_de_dios.json';
+import moqueguaJSON from '../data/moquegua.json';
+import pascoJSON from '../data/pasco.json';
+import piuraJSON from '../data/piura.json';
+import punoJSON from '../data/puno.json';
+import san_martinJSON from '../data/san_martin.json';
+import tacnaJSON from '../data/tacna.json';
+import tumbesJSON from '../data/tumbes.json';
+import ucayaliJSON from '../data/ucayali.json';
 
 
 export const DepartamentoContext = createContext();
@@ -124,7 +124,7 @@ export const DepartamentoProvider = (props) => {
       console.log("nuevo departamento");
       switch(departamento.name.toLowerCase()){
         case "amazonas":
-        setMapaDepartamento(amazonas);
+        setMapaDepartamento(amazonasJSON.amazonas);
         setLatLngCenter([-5.2393125,-78.0148623]);  
         setNivelZoom(6);      
         
@@ -132,7 +132,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "ancash":
-        setMapaDepartamento(ancash);
+        setMapaDepartamento(ancashJSON.ancash);
         setLatLngCenter([-9.4461096,-77.8325159]);   
         setNivelZoom(7);       
 
@@ -140,7 +140,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "apurimac":
-        setMapaDepartamento(apurimac);
+        setMapaDepartamento(apurimacJSON.apurimac);
         setLatLngCenter([-14.2707569,-72.9282625]);    
         setNivelZoom(7);     
         
@@ -148,7 +148,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(8);
         break;
         case "arequipa":
-        setMapaDepartamento(arequipa);
+        setMapaDepartamento(arequipaJSON.arequipa);
         setLatLngCenter([-16.0006729,-72.709381]);  
         setNivelZoom(7);    
         
@@ -156,7 +156,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "ayacucho":
-        setMapaDepartamento(ayacucho);
+        setMapaDepartamento(ayacuchoJSON.ayacucho);
         setLatLngCenter([-14.0539587,-74.5059557]);  
         setNivelZoom(7);      
         
@@ -165,7 +165,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "cajamarca":
-        setMapaDepartamento(cajamarca);
+        setMapaDepartamento(cajamarcaJSON.cajamarca);
         setLatLngCenter([-6.3829169,-79.210689]);    
         setNivelZoom(7);       
 
@@ -173,7 +173,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "callao":
-        setMapaDepartamento(callao);
+        setMapaDepartamento(callaoJSON.callao);
         setLatLngCenter([-11.9575372,-77.1330432]);    
         setNivelZoom(10);  
         
@@ -182,7 +182,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "cusco":
-        setMapaDepartamento(cusco);
+        setMapaDepartamento(cuscoJSON.cusco);
         setLatLngCenter([-13.2521408,-72.1450229]);   
         setNivelZoom(6);     
         
@@ -191,7 +191,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "huancavelica":
-        setMapaDepartamento(huancavelica);
+        setMapaDepartamento(huancavelicaJSON.huancavelica);
         setLatLngCenter([-13.1073438,-75.3077166]);    
         setNivelZoom(7);       
 
@@ -200,7 +200,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "huanuco":
-        setMapaDepartamento(huanuco);
+        setMapaDepartamento(huanucoJSON.huanuco);
         setLatLngCenter([-9.6307037,-76.1146156]);      
         setNivelZoom(7);     
         
@@ -208,7 +208,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(8);
         break;
         case "ica":
-        setMapaDepartamento(ica);
+        setMapaDepartamento(icaJSON.ica);
         setLatLngCenter([-14.209475,-75.594383]);      
         setNivelZoom(7);       
 
@@ -217,7 +217,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "junin":
-        setMapaDepartamento(junin);
+        setMapaDepartamento(juninJSON.junin);
         setLatLngCenter([-11.7497538,-75.049089]);    
         setNivelZoom(7);    
         
@@ -226,7 +226,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "la libertad":
-        setMapaDepartamento(la_libertad);
+        setMapaDepartamento(la_libertadJSON.la_libertad);
         setLatLngCenter([-8.1368741,-78.3187618]);    
         setNivelZoom(7);      
         
@@ -235,7 +235,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "lambayeque":
-        setMapaDepartamento(lambayeque);
+        setMapaDepartamento(lambayequeJSON.lambayeque);
         setLatLngCenter([-6.387508,-79.8308728]);
         setNivelZoom(7);       
 
@@ -244,7 +244,7 @@ export const DepartamentoProvider = (props) => {
 
         break;
         case "lima":
-        setMapaDepartamento(lima);
+        setMapaDepartamento(limaJSON.lima);
         setLatLngCenter([-11.7845359,-76.8054682]);     
         setNivelZoom(7);       
 
@@ -252,7 +252,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "loreto":
-        setMapaDepartamento(loreto);
+        setMapaDepartamento(loretoJSON.loreto);
         setLatLngCenter([-4.5145346,-74.7804353]);   
         setNivelZoom(6);      
         
@@ -260,7 +260,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(6);
         break;
         case "madre de dios":
-        setMapaDepartamento(madre_de_dios);
+        setMapaDepartamento(madre_de_diosJSON.madre_de_dios);
         setLatLngCenter([-11.8200212,-70.6103924]);   
         setNivelZoom(6);       
 
@@ -268,7 +268,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "moquegua":
-        setMapaDepartamento(moquegua);
+        setMapaDepartamento(moqueguaJSON.moquegua);
         setLatLngCenter([-17.0060669,-70.9084236]);   
         setNivelZoom(7);       
 
@@ -277,7 +277,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         case "pasco":
-        setMapaDepartamento(pasco);
+        setMapaDepartamento(pascoJSON.pasco);
         setLatLngCenter([-10.5473215,-75.4979924]);         
         setNivelZoom(7);     
         
@@ -285,7 +285,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(8);
         break;
         case "piura":
-        setMapaDepartamento(piura);
+        setMapaDepartamento(piuraJSON.piura);
         setLatLngCenter([-5.2141378,-80.818311]); 
         setNivelZoom(7);       
 
@@ -293,7 +293,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(8);
         break;
         case "puno":
-        setMapaDepartamento(puno);
+        setMapaDepartamento(punoJSON.puno);
         setLatLngCenter([-15.2022201,-70.1714319]); 
         setNivelZoom(7);   
         
@@ -301,7 +301,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "san martin":  
-        setMapaDepartamento(san_martin);
+        setMapaDepartamento(san_martinJSON.san_martin);
         setLatLngCenter([-7.2703861,-76.7451582]); 
         setNivelZoom(6);  
 
@@ -309,7 +309,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(7);
         break;
         case "tacna":
-        setMapaDepartamento(tacna);
+        setMapaDepartamento(tacnaJSON.tacna);
         setLatLngCenter([-17.5816511,-70.321977]);      
         setNivelZoom(7);  
 
@@ -317,7 +317,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(8);
         break;
         case "tumbes":
-        setMapaDepartamento(tumbes);
+        setMapaDepartamento(tumbesJSON.tumbes);
         setLatLngCenter([-3.9214814,-80.6558616]);    
         setNivelZoom(8);  
 
@@ -325,7 +325,7 @@ export const DepartamentoProvider = (props) => {
         setNivelZoomDesktop(9);
         break;
         case "ucayali":
-        setMapaDepartamento(ucayali);
+        setMapaDepartamento(ucayaliJSON.ucayali);
         setLatLngCenter([-9.7131766,-73.6195824]);
         setNivelZoom(6);  
         
@@ -334,7 +334,7 @@ export const DepartamentoProvider = (props) => {
         break;
 
         default:
-        setMapaDepartamento(ucayali);
+        setMapaDepartamento(ucayaliJSON.ucayali);
         setLatLngCenter([-9.7131766,-73.6195824]);
         setNivelZoom(6);  
         

@@ -75,6 +75,11 @@ const Home = () => {
             padding-bottom: 0;
             margin-bottom: 2rem;
           }
+          &>span{
+            font-weight: 500;
+            margin-top: -1rem;
+            margin-bottom: .5rem;
+          }
 
         };
         .details-etapa{
@@ -106,7 +111,7 @@ const Home = () => {
           ?
           <Fragment>
             <DetailsTotalHome peru={peru} provincia={{}}></DetailsTotalHome> 
-            <DetailsEtapaHome result={peru} provincia={{}}></DetailsEtapaHome>
+            <DetailsEtapaHome peru={peru} provincia={{}}></DetailsEtapaHome>
           </Fragment> 
           :
           <BigSpinner></BigSpinner>

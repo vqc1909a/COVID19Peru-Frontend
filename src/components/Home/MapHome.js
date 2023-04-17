@@ -1,8 +1,8 @@
 // asdsasd
-import React, {Fragment, useMemo, useState} from 'react';
-import {MapContainer, GeoJSON, useMapEvent} from 'react-leaflet';
+import React, {Fragment, useMemo} from 'react';
+import {MapContainer, GeoJSON} from 'react-leaflet';
 import styled from '@emotion/styled';
-import {peru as peruJSON} from '../../data/departamentos.json';
+import peruJSON from '../../data/departamentos.json';
 import L from 'leaflet';
 import Leyenda from '../../components/Leyenda';
 import BigSpinner from '../BigSpinner';
@@ -157,12 +157,12 @@ const MapHome = ({departamentos}) => {
   if(departamentos.length === 0){
     component = <div className="big-spinner"><BigSpinner></BigSpinner></div>
   }else{
-    peruJSON.forEach((departamento, i) => {
+    peruJSON.peru.forEach((departamento, i) => {
      departamento.properties.CASOS = departamentos[i].positivos;
     }) 
     component = <MapHomeContainer className='map-home'>
        <MapContainer center={positionCenterPeru} scrollWheelZoom={false} zoom={6}>
-          <GeoJSON data={peruJSON} style={mapStyle} onEachFeature={onEachFeature}  />
+          <GeoJSON data={peruJSON.peru} style={mapStyle} onEachFeature={onEachFeature}  />
 
           <div style={{position: "absolute", left: "10%", bottom: "8%"}}>
             <Leyenda departamento={false}></Leyenda>                   

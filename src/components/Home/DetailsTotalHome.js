@@ -4,9 +4,12 @@ import {DarkModeContext} from '../../context/DarkModeContext';
 import {DepartamentoContext} from '../../context/DepartamentoContext';
 import BigSpinner from '../../components/BigSpinner';
 import SmallSpinner from '../../components/SmallSpinner';
-import Chart from 'react-apexcharts'
-import { Chart as Chart2} from 'chart.js';
+import {agregarEspacios} from "../../helpers";
+import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+let myChart 
+Chart.register(ChartDataLabels);
 const DetailsTotalHome = ({peru, provincia}) => {
   if(Object.keys(provincia).length !== 0){
     peru = provincia
@@ -45,11 +48,18 @@ const DetailsTotalHome = ({peru, provincia}) => {
       }
      .grafico{
         position: relative;
+        align-self: stretch;
+        display: flex;
+        justify-content: center;
         /* .chartjs-render-monitor{
           width:  100% !important;
           height:  100% !important;
 
         } */
+        @media only screen and (min-width: 768px){
+          width: 60%;
+          margin: 0 auto;
+        }
         .porcentaje_infectados{
           position: absolute;
           top: 50%;
@@ -57,11 +67,12 @@ const DetailsTotalHome = ({peru, provincia}) => {
           transform: translate(-50%, -50%);
           p{
             font-family: "Rubik Medium";
-            margin-bottom: .5rem;
             transition: color .5s ease-ease-in-out;
+            margin-bottom: -.5rem
           }
           span{
             font-family: "Rubik Medium", sans-serif;
+            transition: color .5s ease-ease-in-out;
           }
         }
       }
@@ -71,95 +82,15 @@ const DetailsTotalHome = ({peru, provincia}) => {
     `
   }, [])
 
-  const data = {
-    series: [infectados, no_infectados],
-    options: {
-      chart: {
-        type: 'donut'
-      },
-      labels: ["Infectados", "No Infectados"],
-      colors: [rojo, blanco],
-      stroke: {
-         show: false,
-      },
-      fill: {
-        colors: [rojo, blanco],
-        type: 'solid',
-        gradient: {
-            shade: 'dark',
-            type: "horizontal",
-            shadeIntensity: 0.5,
-            gradientToColors: undefined,
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [0, 50, 100],
-            colorStops: []
-        },
-      },
-      plotOptions: {
-        pie: {
-            expandOnClick: false,
-            donut: {
-                size: '80%'
-            }
-        }
-      },
-      legend: {
-          show: false
-      },
-      responsive: [ 
-         {
-            breakpoint: 576,
-            options: {
-                chart: {
-                    width: "210",
-                    height: "210"
-                }
-            }
-        },
-        {
-            breakpoint: 768,
-            options: {
-                chart: {
-                    width: "250",
-                    height: "250"
-                }
-            }
-        }
-      ],
-      dataLabels: {
-        style: {
-            fontSize: '16px',
-            fontFamily: 'Arial, Helvetica,sans-serif',
-            fontWeight: 'light',
-            colors: ['#000', '#000']
-        },
-        background: {
-            enabled: true,
-            foreColor: '#fff',
-            padding: 6,
-            borderRadius: 2,
-            borderWidth: 1,
-            borderColor: '#fff',
-            opacity: 0.6,
-            dropShadow: {
-                enabled: false,
-                top: 1,
-                left: 1,
-                blur: 1,
-                color: '#000',
-                opacity: 0.45
-            }
-        }
-      }
-    }
-  };
+ 
 
 
   useEffect(() => {
     const ctx = document.getElementById('myChart1').getContext('2d');
-    let myChart = new Chart2(ctx, {
+    if(myChart){
+      myChart.destroy();      
+    }
+    myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: ["Infectados", "No infectados"],
@@ -184,17 +115,17 @@ const DetailsTotalHome = ({peru, provincia}) => {
                     color: 'white',
                     //Esto es para que se ubique en el borde del grafico, central interior o exterior respectivamente
                     anchor: 'center', // center default start end
-                    backgroundColor: 'hsl(12, 88%, 59%)', //null default
-                    borderColor: 'hsl(228, 39%, 23%)', // null default
-                    borderRadius: 50, // 0 defaul
-                    borderWidth: 0, // 0 default
+                    backgroundColor: 'rgba(1, 1, 1, .5)', //null default
+                    borderColor: 'white', // null default
+                    borderRadius: 3, // 0 defaul
+                    borderWidth: 1, // 0 default
                     display: true, // true default
                     font: {
-                        size: 12, //12 default
+                        size: 13, //12 default
                         family: "'Be Vietnam Pro', sans-serif", //"'Helvetica Neue', 'Helvetica', 'Arial', sans-serif" default
                         style: 'normal', //normal default, italic, oblique, initial, inherit
                         weight: "bold", //undefined default
-                        lineHeight: 1.2 //1.2 default
+                        lineHeight: 1 //1.2 default
                     },
                     formatter: function(value, context) {
                         //!Aqui tendríamos que hacer la division del nunmero entre el total x el 100%
@@ -203,14 +134,15 @@ const DetailsTotalHome = ({peru, provincia}) => {
                     opacity: 1,
                     padding: {
                         top: 8,
-                        right: 8,
-                        bottom: 8,
+                        right: 6,
+                        bottom: 6,
                         left: 8
                     },
                     //Te da vuelta el label
                     rotation: 0, //0 default
                     textAlign: 'start', // start default, center, end
                 },
+                
             }],
         },
         options: {
@@ -284,14 +216,26 @@ const DetailsTotalHome = ({peru, provincia}) => {
                     //Esto es para formatear la salida
                     callbacks: {
                         label: function(context) {
-                            return `${context.label}: ${(Number(context.parsed) / poblacion * 100).toFixed(2)}%`;
-                        }
+                            return `${context.label}: ${agregarEspacios(Number(context.parsed))}`;
+                        },
+                        labelTextColor: function(tooltipItem) {
+                          // let color = tooltipItem.dataset.backgroundColor[tooltipItem.dataIndex]
+                          return "white"
+                        },
+                        //Deshabilitar el titulo de cada tooltip
+                        title: function(tooltipItem) {
+                          return ""
+                        }                            
                     },
                     //average se queda estatico cuando haces hover mientras nearest sigue al mouse cuando sale de su scope (figura)
                     position: 'nearest', //average default
-                    backgroundColor: 'hsl(228, 39%, 23%)',
-                    titleColor: '#fff', //#fff default
-                    bodyColor: "#fff", // #fff default
+                    backgroundColor: function(context){
+                      let arrayColors = [rojo, blanco]
+                      let index = context.tooltip.dataPoints[0].dataIndex
+                      return arrayColors[index]
+                    },
+                    // titleColor: '#fff', //#fff default
+                    // bodyColor: "#fff", // #fff default
                     bodyFont: {
                         size: 14, // 12 default 
                         family: "'Be Vietnam Pro', sans-serif", //"'Helvetica Neue', 'Helvetica', 'Arial', sans-serif" default
@@ -309,10 +253,10 @@ const DetailsTotalHome = ({peru, provincia}) => {
                     //Borders del tooltip
                     cornerRadius: 6, // 6 default
                     //Tamaño y padding(no funca) del cuadradito del tooltip
-                    boxWidth: 14, // bodyFont.size default
-                    boxHeight: 14, // bodyFont.size default
-                    boxPadding: 4, // 1 default
-                    //Forma figura del tooltip en base al boxWidth y boxHeight que diste, en este caso sera un circulo
+                    boxWidth: 0, // bodyFont.size default
+                    boxHeight: 0, // bodyFont.size default
+                    boxPadding: 0, // 1 default
+                    //Forma figura del tooltip en base al boxWidth y boxHeight que diste, si le das true te forma la figura, caso contrario será un cuadrado
                     usePointStyle: true,
                     //El border de la figurita del tooltip
                     borderColor: 'rgba(0,0,0,0)', // 'rgba(0,0,0,0)'
@@ -325,7 +269,7 @@ const DetailsTotalHome = ({peru, provincia}) => {
                 delay: 0,
                 //loop: true
             },
-            transition: 'reset'
+            transition: 'reset',
             //animations: {
             //	tension: {
             //		duration: 1000,
@@ -335,12 +279,13 @@ const DetailsTotalHome = ({peru, provincia}) => {
             //		loop: true
             //	}
             //}
+            cutout: "130"
         }
         
     });
 
     //eslint-disable-next-line
-  }, [])
+  }, [rojo, blanco])
 
 
   
@@ -348,10 +293,11 @@ const DetailsTotalHome = ({peru, provincia}) => {
   return (
     <DetailsTotalHomeContainer className="details-total flex">
       <h2 className={`text-big ${isDarkMode ? 'text-primary-dark' : 'text-primary'}`}>Porcentaje de la población<br></br>infectada</h2>
+      <span className={`text-normal ${isDarkMode ? 'text-primary-dark' : 'text-primary'}`}>Población Total: {agregarEspacios(poblacion)}</span>
       {!loadingDataProvincia 
       ?
         <div className="grafico">
-            <Chart options={data.options} series={data.series} type="donut" width="350" height="350"></Chart>
+            {/* <Chart options={data.options} series={data.series} type="donut" width="350" height="350"></Chart> */}
             <canvas
               id="myChart1"
               role="img"

@@ -1,33 +1,33 @@
 import React, {useMemo, useRef, useContext, Fragment, useState} from 'react';
 import styled from '@emotion/styled';
-import {peru as mapaPeru} from '../data/departamentos.json';
 import {DepartamentoContext} from '../context/DepartamentoContext';
 import {PeruContext} from '../context/PeruContext';
-import {amazonas} from '../data/amazonas.json';
-import {ancash} from '../data/ancash.json';
-import {apurimac} from '../data/apurimac.json';
-import {arequipa} from '../data/arequipa.json';
-import {ayacucho} from '../data/ayacucho.json';
-import {cajamarca} from '../data/cajamarca.json';
-import {callao} from '../data/callao.json';
-import {cusco} from '../data/cusco.json';
-import {huancavelica} from '../data/huancavelica.json';
-import {huanuco} from '../data/huanuco.json';
-import {ica} from '../data/ica.json';
-import {junin} from '../data/junin.json';
-import {la_libertad} from '../data/la_libertad.json';
-import {lambayeque} from '../data/lambayeque.json';
-import {lima} from '../data/lima.json';
-import {loreto} from '../data/loreto.json';
-import {madre_de_dios} from '../data/madre_de_dios.json';
-import {moquegua} from '../data/moquegua.json';
-import {pasco} from '../data/pasco.json';
-import {piura} from '../data/piura.json';
-import {puno} from '../data/puno.json';
-import {san_martin} from '../data/san_martin.json';
-import {tacna} from '../data/tacna.json';
-import {tumbes} from '../data/tumbes.json';
-import {ucayali} from '../data/ucayali.json';
+import peruJSON from '../data/departamentos.json';
+import amazonasJSON from '../data/amazonas.json';
+import ancashJSON from '../data/ancash.json';
+import apurimacJSON from '../data/apurimac.json';
+import arequipaJSON from '../data/arequipa.json';
+import ayacuchoJSON from '../data/ayacucho.json';
+import cajamarcaJSON from '../data/cajamarca.json';
+import callaoJSON from '../data/callao.json';
+import cuscoJSON from '../data/cusco.json';
+import huancavelicaJSON from '../data/huancavelica.json';
+import huanucoJSON from '../data/huanuco.json';
+import icaJSON from '../data/ica.json';
+import juninJSON from '../data/junin.json';
+import la_libertadJSON from '../data/la_libertad.json';
+import lambayequeJSON from '../data/lambayeque.json';
+import limaJSON from '../data/lima.json';
+import loretoJSON from '../data/loreto.json';
+import madre_de_diosJSON from '../data/madre_de_dios.json';
+import moqueguaJSON from '../data/moquegua.json';
+import pascoJSON from '../data/pasco.json';
+import piuraJSON from '../data/piura.json';
+import punoJSON from '../data/puno.json';
+import san_martinJSON from '../data/san_martin.json';
+import tacnaJSON from '../data/tacna.json';
+import tumbesJSON from '../data/tumbes.json';
+import ucayaliJSON from '../data/ucayali.json';
 import { MapContainer, GeoJSON, useMapEvent, TileLayer, LayersControl, Marker, Popup, useMapEvents} from 'react-leaflet';
 import BigSpinner from '../components/BigSpinner';
 import L from 'leaflet';
@@ -262,82 +262,82 @@ const MapView = () => {
   if(Object.keys(peru).length === 0 || departamentos.length === 0){
     component = <div className="big-spinner"><BigSpinner></BigSpinner></div>
   }else{
-    mapaPeru.forEach((departamento, i) => {
+    peruJSON.peru.forEach((departamento, i) => {
      departamento.properties.CASOS = peru.mapa_hijos[i];
     }) 
-    amazonas.forEach((provincia, i) => {
+    amazonasJSON.amazonas.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "amazonas").provincias[i].positivos;
     })
-    ancash.forEach((provincia, i) => {
+    ancashJSON.ancash.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "ancash").provincias[i].positivos;
     })
-    apurimac.forEach((provincia, i) => {
+    apurimacJSON.apurimac.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "apurimac").provincias[i].positivos;
     })
-    arequipa.forEach((provincia, i) => {
+    arequipaJSON.arequipa.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "arequipa").provincias[i].positivos;
     })
-    ayacucho.forEach((provincia, i) => {
+    ayacuchoJSON.ayacucho.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "ayacucho").provincias[i].positivos;
     })
-    cajamarca.forEach((provincia, i) => {
+    cajamarcaJSON.cajamarca.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "cajamarca").provincias[i].positivos;
     })
-    callao.forEach((provincia, i) => {
+    callaoJSON.callao.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "callao").provincias[i].positivos;
     })
-    cusco.forEach((provincia, i) => {
+    cuscoJSON.cusco.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "cusco").provincias[i].positivos;
     })
-    huancavelica.forEach((provincia, i) => {
+    huancavelicaJSON.huancavelica.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "huancavelica").provincias[i].positivos;
     })
-    huanuco.forEach((provincia, i) => {
+    huanucoJSON.huanuco.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "huanuco").provincias[i].positivos;
     })
-    ica.forEach((provincia, i) => {
+    icaJSON.ica.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "ica").provincias[i].positivos;
     })
-    junin.forEach((provincia, i) => {
+    juninJSON.junin.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "junin").provincias[i].positivos;
     })
-    la_libertad.forEach((provincia, i) => {
+    la_libertadJSON.la_libertad.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "la libertad").provincias[i].positivos;
     })
-    lambayeque.forEach((provincia, i) => {
+    lambayequeJSON.lambayeque.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "lambayeque").provincias[i].positivos;
     })
-    lima.forEach((provincia, i) => {
+    limaJSON.lima.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "lima").provincias[i].positivos;
     })
-    loreto.forEach((provincia, i) => {
+    loretoJSON.loreto.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "loreto").provincias[i].positivos;
     })
-    madre_de_dios.forEach((provincia, i) => {
+    madre_de_diosJSON.madre_de_dios.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "madre de dios").provincias[i].positivos;
     })
-    moquegua.forEach((provincia, i) => {
+    moqueguaJSON.moquegua.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "moquegua").provincias[i].positivos;
     })
-    pasco.forEach((provincia, i) => {
+    pascoJSON.pasco.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "pasco").provincias[i].positivos;
     })
-    piura.forEach((provincia, i) => {
+    piuraJSON.piura.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "piura").provincias[i].positivos;
     })
-    puno.forEach((provincia, i) => {
+    punoJSON.puno.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "puno").provincias[i].positivos;
     })
-    san_martin.forEach((provincia, i) => {
+    san_martinJSON.san_martin.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "san martin").provincias[i].positivos;
     })
-    tacna.forEach((provincia, i) => {
+    tacnaJSON.tacna.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "tacna").provincias[i].positivos;
     })
-    tumbes.forEach((provincia, i) => {
+    tumbesJSON.tumbes.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "tumbes").provincias[i].positivos;
     })
-    ucayali.forEach((provincia, i) => {
+    ucayaliJSON.ucayali.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "ucayali").provincias[i].positivos;
     })
 
@@ -347,7 +347,7 @@ const MapView = () => {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidnFjMTkwOWEiLCJhIjoiY2tnb2Q2dmJwMGNzNTJwb2lkM2I5cnYyNyJ9.v3Rx_381xfFtDAm_Qu-Tnw"
           />
-            <GeoJSON ref={geojsonref}  data={[...mapaPeru, ...amazonas, ...ancash, ...apurimac, ...arequipa, ...ayacucho, ...cajamarca, ...callao, ...cusco, ...huancavelica, ...huanuco, ...ica, ...junin, ...la_libertad, ...lambayeque, ...lima, ...loreto, ...madre_de_dios, ...moquegua, ...pasco, ...piura, ...puno, ...san_martin, ...tacna, ...tumbes, ...ucayali]} style={mapStyle} onEachFeature={onEachFeature} />
+            <GeoJSON ref={geojsonref}  data={[...peruJSON.peru, ...amazonasJSON.amazonas, ...ancashJSON.ancash, ...apurimacJSON.apurimac, ...arequipaJSON.arequipa, ...ayacuchoJSON.ayacucho, ...cajamarcaJSON.cajamarca, ...callaoJSON.callao, ...cuscoJSON.cusco, ...huancavelicaJSON.huancavelica, ...huanucoJSON.huanuco, ...icaJSON.ica, ...juninJSON.junin, ...la_libertadJSON.la_libertad, ...lambayequeJSON.lambayeque, ...limaJSON.lima, ...loretoJSON.loreto, ...madre_de_diosJSON.madre_de_dios, ...moqueguaJSON.moquegua, ...pascoJSON.pasco, ...piuraJSON.piura, ...punoJSON.puno, ...san_martinJSON.san_martin, ...tacnaJSON.tacna, ...tumbesJSON.tumbes, ...ucayaliJSON.ucayali]} style={mapStyle} onEachFeature={onEachFeature} />
             <SetViewOnClick animateRef={true} />
 
             <LayersControl position="topright">

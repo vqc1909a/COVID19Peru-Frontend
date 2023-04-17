@@ -7,9 +7,9 @@ import SmallSpinner from '../../components/SmallSpinner';
 import Chart from 'react-apexcharts'
 
 
-const DetailsEtapaHome = ({result, provincia}) => {
+const DetailsEtapaHome = ({peru, provincia}) => {
   if(Object.keys(provincia).length !== 0){
-    result = provincia
+    peru = provincia
   }
   const {isDarkMode} = useContext(DarkModeContext); 
   const {loadingDataProvincia} = useContext(DepartamentoContext);
@@ -66,12 +66,12 @@ const DetailsEtapaHome = ({result, provincia}) => {
   }, [])
 
   
-  const cantidad_primera_infancia = result.etapa_de_vida_fallecidos.primera_infancia;
-  const cantidad_infancia = result.etapa_de_vida_fallecidos.infancia;
-  const cantidad_adolescencia = result.etapa_de_vida_fallecidos.adolescencia;
-  const cantidad_juventud = result.etapa_de_vida_fallecidos.juventud;
-  const cantidad_adultez = result.etapa_de_vida_fallecidos.adultez;
-  const cantidad_persona_mayor = result.etapa_de_vida_fallecidos.persona_mayor;
+  const cantidad_primera_infancia = peru.etapa_de_vida_fallecidos.primera_infancia;
+  const cantidad_infancia = peru.etapa_de_vida_fallecidos.infancia;
+  const cantidad_adolescencia = peru.etapa_de_vida_fallecidos.adolescencia;
+  const cantidad_juventud = peru.etapa_de_vida_fallecidos.juventud;
+  const cantidad_adultez = peru.etapa_de_vida_fallecidos.adultez;
+  const cantidad_persona_mayor = peru.etapa_de_vida_fallecidos.persona_mayor;
 
   const data = {
     series: [cantidad_primera_infancia, cantidad_infancia, cantidad_adolescencia, cantidad_juventud, cantidad_adultez, cantidad_persona_mayor],
