@@ -1,35 +1,23 @@
-import React, {useMemo, useContext, Fragment, useState, useEffect} from 'react';
+import React, {useMemo, useContext, useState, useEffect, useRef} from 'react';
 import styled from '@emotion/styled';
 import {DarkModeContext} from '../../context/DarkModeContext';
-import {DepartamentoContext} from '../../context/DepartamentoContext';
-import BigSpinner from '../../components/BigSpinner';
-import SmallSpinner from '../../components/SmallSpinner';
 import {agregarEspacios} from "../../helpers";
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-let myChart 
 Chart.register(ChartDataLabels);
+
+let myChart;
 const DetailsTotalHome = ({peru, provincia}) => {
   if(Object.keys(provincia).length !== 0){
     peru = provincia
   }
   const {isDarkMode} = useContext(DarkModeContext);
-  const {loadingDataProvincia} = useContext(DepartamentoContext);
 
   const [rojo, changeRojo] = useState("#B51D1D");
   const [blanco, changeBlanco] = useState("#DED8D8");
 
-  useEffect(()=>{
-    if(isDarkMode){
-      changeRojo("#df3333");
-      changeBlanco("#3a2d2d");
-    }else{
-      changeRojo("#B51D1D");
-      changeBlanco("#DED8D8");
-    }
-
-  }, [isDarkMode])
+  const ctxRef = useRef(null);
 
  
   const poblacion = peru.poblacion
@@ -82,11 +70,20 @@ const DetailsTotalHome = ({peru, provincia}) => {
     `
   }, [])
 
- 
+  useEffect(()=>{
+    if(isDarkMode){
+      changeRojo("#df3333");
+      changeBlanco("#3a2d2d");
+    }else{
+      changeRojo("#B51D1D");
+      changeBlanco("#DED8D8");
+    }
+  }, [isDarkMode])
 
 
+  //No debes de hacer condicionales para el canvas que hacer referencia el new Chart para que dibuje el grafico, siempre debe estar presente en el DOM desde el inicio, en vez de destruir tu grafico y volver a crearlo, puede tambien actualizar sus datos con el metodo .update() pero antes asignado el valor de sus atributos, pero como en react esta dinamico podemos también hacer el update(), pero como quiero aprovechar la transición, lo destruimos y creamos o tra vez
   useEffect(() => {
-    const ctx = document.getElementById('myChart1').getContext('2d');
+    const ctx = ctxRef.current.getContext('2d');
     if(myChart){
       myChart.destroy();      
     }
@@ -108,7 +105,7 @@ const DetailsTotalHome = ({peru, provincia}) => {
                     'black',  // color for data at index 2
                     'black',    // color for data at indexOf
                 ],
-                borderWidth: 1,
+                borderWidth: 0,
                 //!Esto es un cambio solo para los labels de este dataset
                 datalabels: {
                     align: 'center', // center default start end
@@ -157,10 +154,10 @@ const DetailsTotalHome = ({peru, provincia}) => {
                 //!Esto es para añdirle un padding a todos los laoos del grafico en general === ( grafico + leyenda + axios X y Y)
                 //padding: 30,
                 padding: {
-                    left: 0,
-                    right: 0,
-                    top: 10,
-                    bottom: 10,
+                    left: window.innerWidth >= 768 ? 5 : 20,
+                    right: window.innerWidth >= 768 ? 5 : 20,
+                    top: 5,
+                    bottom: 5,
                 },
             },
             plugins: {
@@ -279,29 +276,25 @@ const DetailsTotalHome = ({peru, provincia}) => {
             //		loop: true
             //	}
             //}
-            cutout: "130"
+            cutout: window.innerWidth >= 1400 ? "170" : "140"
         }
         
     });
-
     //eslint-disable-next-line
-  }, [rojo, blanco])
-
-
-  
+  }, [isDarkMode, provincia])
 
   return (
     <DetailsTotalHomeContainer className="details-total flex">
       <h2 className={`text-big ${isDarkMode ? 'text-primary-dark' : 'text-primary'}`}>Porcentaje de la población<br></br>infectada</h2>
-      <span className={`text-normal ${isDarkMode ? 'text-primary-dark' : 'text-primary'}`}>Población Total: {agregarEspacios(poblacion)}</span>
-      {!loadingDataProvincia 
-      ?
+      <span className={`text-normal ${isDarkMode ? 'text-primary-dark' : 'text-primary'}`}>Población <span style={{textTransform: "capitalize"}}>{peru.name}</span>: {agregarEspacios(poblacion)}</span>
+      
         <div className="grafico">
             {/* <Chart options={data.options} series={data.series} type="donut" width="350" height="350"></Chart> */}
             <canvas
               id="myChart1"
               role="img"
               aria-label="Porcentaje de la población infectada"
+              ref={ctxRef}
             >
               <p>Porcentaje de la población infectada</p>
             </canvas>
@@ -310,14 +303,7 @@ const DetailsTotalHome = ({peru, provincia}) => {
                 <span className={`text-normal ${isDarkMode ? 'text-primary-dark' : 'text-primary'}`}>INFECTADOS</span>
             </div>
         </div>  
-      :
-        <Fragment>
-          <BigSpinner></BigSpinner>
-          <div className="small-spinner-wrapper">
-            <SmallSpinner></SmallSpinner>
-          </div>
-        </Fragment>
-      }
+    
     </DetailsTotalHomeContainer>
   );
 }

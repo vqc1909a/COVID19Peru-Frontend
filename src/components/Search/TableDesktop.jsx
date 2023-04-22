@@ -5,7 +5,7 @@ import BigSpinner from '../BigSpinner';
 import {numberWithComas} from '../../helpers';
 import {DepartamentoContext} from '../../context/DepartamentoContext.js';
 import {useHistory} from 'react-router-dom';
-const TableDesktop = ({ darkMode, departamentosOrdenados }) => {
+const TableDesktop = ({ isDarkMode, departamentosOrdenados }) => {
   const history = useHistory();
   const {setDepartamento, setProvincia} = useContext(DepartamentoContext);
   const SectionStyled = useMemo(
@@ -56,6 +56,9 @@ const TableDesktop = ({ darkMode, departamentosOrdenados }) => {
             &:first-of-type {
               font-weight: bold;
             }
+            >td:first-of-type{
+              text-transform: capitalize
+            }
           }
         }
       }
@@ -75,17 +78,17 @@ const TableDesktop = ({ darkMode, departamentosOrdenados }) => {
   );
   const redirigirMapa = (e, departamento) => {
     e.currentTarget.textContent = "...Cargando"
-    setDepartamento(departamento);
+    setDepartamento({...departamento});
     setProvincia({});
     setTimeout(() => {
       history.push(`/departamento/${departamento.url}`);
-    }, 1000);
+    }, 1500);
   }
   return (
     <SectionStyled className="search-table-container-desktop">
       <p
         className={`text-medium ${
-          darkMode ? 'text-primary-dark' : 'text-primary'
+          isDarkMode ? 'text-primary-dark' : 'text-primary'
         }`}
       >
         Estado del covid-19 por departameto
@@ -94,32 +97,32 @@ const TableDesktop = ({ darkMode, departamentosOrdenados }) => {
       ?
         <table
         className={`text-normal ${
-          darkMode ? 'text-primary-dark' : 'text-primary'
+          isDarkMode ? 'text-primary-dark' : 'text-primary'
         }`}
       >
         <thead
-          className={`${darkMode ? 'special-color-dark' : 'special-color'} ${
-            darkMode ? 'dark-back' : 'light-back'
+          className={`${isDarkMode ? 'special-color-dark' : 'special-color'} ${
+            isDarkMode ? 'dark-back' : 'light-back'
           }`}
         >
           <tr>
             <th>Departamento</th>
             <th>Casos Positivos</th>
             <th>Fallecimientos</th>
-            <th>Mortalidad</th>
+            <th>Mortalidad<br />(Por cada 1000 personas)</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody>
           {departamentosOrdenados.map((departamento, i) => (
             <tr key={i}>
-              <td>{numberWithComas(departamento.name)}</td>
+              <td>{departamento.name}</td>
               <td>{numberWithComas(departamento.positivos)}</td>
               <td>{numberWithComas(departamento.fallecidos)}</td>
-              <td>{((departamento.positivos / departamento.poblacion) * 1000).toFixed(2)}%</td>
+              <td>{Math.round((departamento.positivos / departamento.poblacion * 1000).toFixed(2))}</td>
               <td>
              
-              <button type="button" data-name={departamento.name} onClick={(e) => redirigirMapa(e, departamento)} className={darkMode ? 'button-dark' : ''}>
+              <button type="button" data-name={departamento.name} onClick={(e) => redirigirMapa(e, departamento)} className={isDarkMode ? 'button-dark' : ''}>
                 Más detalles
               </button>
               </td>

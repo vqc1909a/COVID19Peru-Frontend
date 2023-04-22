@@ -73,7 +73,7 @@ export const DepartamentoProvider = (props) => {
         const promTumbes = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/tumbes`);
         const promUcayali = axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/ucayali`);
 
-        const [loreto, amazonas, tumbes, piura, lambayeque, cajamarca, libertad, ancash, sanmartin, huanuco, ucayali, pasco, lima, junin, huancavelica, ica, ayacucho, apurimac, cusco, madrededios, puno, arequipa, moquegua, tacna, callao] = await Promise.all([
+        const [amazonas, ancash, apurimac, arequipa, ayacucho, cajamarca, callao, cusco, huancavelica, huanuco, ica, junin, libertad, lambayeque, lima, loreto, madrededios, moquegua, pasco, piura, puno, sanmartin, tacna, tumbes, ucayali] = await Promise.all([
           promAmazonas, 
           promAncash, 
           promApurimac,
@@ -101,245 +101,233 @@ export const DepartamentoProvider = (props) => {
           promUcayali
         ]);
 
-        setDepartamentos([loreto.data, amazonas.data, tumbes.data, piura.data, lambayeque.data, cajamarca.data, libertad.data, ancash.data, sanmartin.data, huanuco.data, ucayali.data, pasco.data, lima.data, junin.data, huancavelica.data, ica.data, ayacucho.data, apurimac.data, cusco.data, madrededios.data, puno.data, arequipa.data, moquegua.data, tacna.data, callao.data]);
+        setDepartamentos([amazonas.data, ancash.data, apurimac.data, arequipa.data, ayacucho.data, cajamarca.data, callao.data, cusco.data,huancavelica.data, huanuco.data, ica.data, junin.data, libertad.data, lambayeque.data, lima.data, loreto.data, madrededios.data, moquegua.data, pasco.data, piura.data, puno.data, sanmartin.data, tacna.data, tumbes.data, ucayali.data]);
 
         // setDepartamentos(data);
         const pathDepartamento = window.location.pathname.slice(14);
 
         const {data} = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/departamento/${pathDepartamento}`);
         setDepartamento(data);          
-        console.log(departamento);
         
       }
     })();  
-  }, [departamentos, departamento])
+    //eslint-disable-next-line
+  }, [])
   
-  // useEffect(()=>{
-  //   if(departamentos.length !== 0){
-  //   }
-  // }, [departamentos])
 
   useEffect(()=>{
+    //Ejecutamos esto cada vez que cambie el valor de departamento u provicnia, ambos vieen de la base de datos
     if(Object.keys(departamento).length !== 0){
-      console.log("nuevo departamento");
       switch(departamento.name.toLowerCase()){
         case "amazonas":
         setMapaDepartamento(amazonasJSON.amazonas);
-        setLatLngCenter([-5.2393125,-78.0148623]);  
-        setNivelZoom(6);      
-        
         setLatLngCenterDesktop([-5.2393125,-77.7148623]);
         setNivelZoomDesktop(7);
+
+        setLatLngCenter([-5.0193125,-78.0148623]);  
+        setNivelZoom(7);      
         break;
         case "ancash":
         setMapaDepartamento(ancashJSON.ancash);
-        setLatLngCenter([-9.4461096,-77.8325159]);   
-        setNivelZoom(7);       
-
         setLatLngCenterDesktop([-9.4461096,-77.4325159]);
         setNivelZoomDesktop(7);
+
+        setLatLngCenter([-9.4461096,-77.7025159]);   
+        setNivelZoom(7);       
         break;
         case "apurimac":
         setMapaDepartamento(apurimacJSON.apurimac);
-        setLatLngCenter([-14.2707569,-72.9282625]);    
-        setNivelZoom(7);     
-        
-        setLatLngCenterDesktop([-13.9707569,-72.6282625]);
+        setLatLngCenterDesktop([-13.8707569,-72.8082625]);
         setNivelZoomDesktop(8);
+
+        setLatLngCenter([-14.0007569,-72.9682625]);    
+        setNivelZoom(8);     
         break;
         case "arequipa":
         setMapaDepartamento(arequipaJSON.arequipa);
-        setLatLngCenter([-16.0006729,-72.709381]);  
-        setNivelZoom(7);    
-        
-        setLatLngCenterDesktop([-16.2006729,-72.809381]);
+        setLatLngCenterDesktop([-15.9006729,-72.809381]);
         setNivelZoomDesktop(7);
+
+        setLatLngCenter([-15.9006729,-72.709381]);  
+        setNivelZoom(7);    
         break;
         case "ayacucho":
         setMapaDepartamento(ayacuchoJSON.ayacucho);
-        setLatLngCenter([-14.0539587,-74.5059557]);  
-        setNivelZoom(7);      
-        
-        setLatLngCenterDesktop([-13.8539587,-73.5059557]);
+        setLatLngCenterDesktop([-13.7539587,-73.8059557]);
         setNivelZoomDesktop(7);
-        break;
 
+        setLatLngCenter([-13.8539587,-74.1559557]);  
+        setNivelZoom(7);      
+        break;
         case "cajamarca":
         setMapaDepartamento(cajamarcaJSON.cajamarca);
-        setLatLngCenter([-6.3829169,-79.210689]);    
-        setNivelZoom(7);       
-
-        setLatLngCenterDesktop([-6.1829169,-78.710689]);
+        setLatLngCenterDesktop([-6.0829169,-78.710689]);
         setNivelZoomDesktop(7);
+
+        setLatLngCenter([-6.1829169,-78.810689]);    
+        setNivelZoom(7);       
         break;
-        case "callao":
+        case "callao":  
         setMapaDepartamento(callaoJSON.callao);
-        setLatLngCenter([-11.9575372,-77.1330432]);    
-        setNivelZoom(10);  
-        
         setLatLngCenterDesktop([-11.9575372,-77.1330432]);
         setNivelZoomDesktop(10);
-        break;
 
+        setLatLngCenter([-11.9575372,-77.1330432]);    
+        setNivelZoom(10);  
+        break;
         case "cusco":
         setMapaDepartamento(cuscoJSON.cusco);
-        setLatLngCenter([-13.2521408,-72.1450229]);   
-        setNivelZoom(6);     
-        
         setLatLngCenterDesktop([-13.2521408,-71.8450229]);
         setNivelZoomDesktop(7);
-        break;
 
+        setLatLngCenter([-13.5521408,-72.0450229]);   
+        setNivelZoom(7);     
+        break;
         case "huancavelica":
         setMapaDepartamento(huancavelicaJSON.huancavelica);
-        setLatLngCenter([-13.1073438,-75.3077166]);    
-        setNivelZoom(7);       
-
-        setLatLngCenterDesktop([-12.8073438,-75.3077166]);
+        setLatLngCenterDesktop([-13.0073438,-75.1077166]);
         setNivelZoomDesktop(8);
+
+        setLatLngCenter([-13.0073438,-75.1077166]);    
+        setNivelZoom(7);       
         break;
 
         case "huanuco":
         setMapaDepartamento(huanucoJSON.huanuco);
-        setLatLngCenter([-9.6307037,-76.1146156]);      
-        setNivelZoom(7);     
-        
-        setLatLngCenterDesktop([-9.4307037,-76.0146156]);
+        setLatLngCenterDesktop([-9.4007037,-76.0146156]);
         setNivelZoomDesktop(8);
+
+        setLatLngCenter([-9.3007037,-76.1146156]);      
+        setNivelZoom(7);     
         break;
         case "ica":
         setMapaDepartamento(icaJSON.ica);
-        setLatLngCenter([-14.209475,-75.594383]);      
-        setNivelZoom(7);       
-
-        setLatLngCenterDesktop([-14.309475,-75.194383]);
+        setLatLngCenterDesktop([-14.209475,-75.294383]);
         setNivelZoomDesktop(8);
-        break;
 
+        setLatLngCenter([-14.109475,-75.594383]);      
+        setNivelZoom(7);       
+        break;
         case "junin":
         setMapaDepartamento(juninJSON.junin);
-        setLatLngCenter([-11.7497538,-75.049089]);    
-        setNivelZoom(7);    
-        
         setLatLngCenterDesktop([-11.6497538,-74.949089]);
         setNivelZoomDesktop(8);
-        break;
 
+        setLatLngCenter([-11.5497538,-75.009089]);    
+        setNivelZoom(7);    
+        break;
         case "la libertad":
         setMapaDepartamento(la_libertadJSON.la_libertad);
-        setLatLngCenter([-8.1368741,-78.3187618]);    
-        setNivelZoom(7);      
-        
-        setLatLngCenterDesktop([-7.9068741,-78.3187618]);
+        setLatLngCenterDesktop([-7.8568741,-78.3187618]);
         setNivelZoomDesktop(8);
-        break;
 
+        setLatLngCenter([-7.9068741,-78.4187618]);    
+        setNivelZoom(7);      
+        break;
         case "lambayeque":
         setMapaDepartamento(lambayequeJSON.lambayeque);
-        setLatLngCenter([-6.387508,-79.8308728]);
-        setNivelZoom(7);       
-
-        setLatLngCenterDesktop([-6.487508,-79.8308728]);
+        setLatLngCenterDesktop([-6.387508,-79.8308728]);
         setNivelZoomDesktop(8);
 
+        setLatLngCenter([-6.387508,-79.8308728]);
+        setNivelZoom(7);       
         break;
         case "lima":
         setMapaDepartamento(limaJSON.lima);
+        setLatLngCenterDesktop([-11.6845359,-76.7054682]);
+        setNivelZoomDesktop(7);
+
         setLatLngCenter([-11.7845359,-76.8054682]);     
         setNivelZoom(7);       
-
-        setLatLngCenterDesktop([-11.9845359,-76.7054682]);
-        setNivelZoomDesktop(7);
         break;
         case "loreto":
         setMapaDepartamento(loretoJSON.loreto);
+        setLatLngCenterDesktop([-4.4045346,-74.7804353]);
+        setNivelZoomDesktop(6);
+        
         setLatLngCenter([-4.5145346,-74.7804353]);   
         setNivelZoom(6);      
-        
-        setLatLngCenterDesktop([-4.5145346,-74.7804353]);
-        setNivelZoomDesktop(6);
         break;
         case "madre de dios":
         setMapaDepartamento(madre_de_diosJSON.madre_de_dios);
+        setLatLngCenterDesktop([-11.9200212,-70.5103924]);
+        setNivelZoomDesktop(7);
+
         setLatLngCenter([-11.8200212,-70.6103924]);   
         setNivelZoom(6);       
-
-        setLatLngCenterDesktop([-12.0200212,-70.5103924]);
-        setNivelZoomDesktop(7);
         break;
         case "moquegua":
         setMapaDepartamento(moqueguaJSON.moquegua);
-        setLatLngCenter([-17.0060669,-70.9084236]);   
-        setNivelZoom(7);       
-
         setLatLngCenterDesktop([-16.9060669,-71.0084236]);
         setNivelZoomDesktop(8);
-        break;
 
+        setLatLngCenter([-16.9060669,-70.9084236]);   
+        setNivelZoom(7);       
+        break;
         case "pasco":
         setMapaDepartamento(pascoJSON.pasco);
-        setLatLngCenter([-10.5473215,-75.4979924]);         
-        setNivelZoom(7);     
-        
         setLatLngCenterDesktop([-10.3473215,-75.5979924]);
         setNivelZoomDesktop(8);
+
+        setLatLngCenter([-10.3473215,-75.4979924]);         
+        setNivelZoom(7);     
         break;
         case "piura":
         setMapaDepartamento(piuraJSON.piura);
-        setLatLngCenter([-5.2141378,-80.818311]); 
-        setNivelZoom(7);       
-
-        setLatLngCenterDesktop([-5.2141378,-80.618311]);
+        setLatLngCenterDesktop([-5.2141378,-80.218311]);
         setNivelZoomDesktop(8);
+
+        setLatLngCenter([-5.1141378,-80.518311]); 
+        setNivelZoom(7);       
         break;
         case "puno":
         setMapaDepartamento(punoJSON.puno);
-        setLatLngCenter([-15.2022201,-70.1714319]); 
-        setNivelZoom(7);   
-        
-        setLatLngCenterDesktop([-15.2022201,-69.9714319]);
+        setLatLngCenterDesktop([-15.1022201,-69.9714319]);
         setNivelZoomDesktop(7);
+
+        setLatLngCenter([-15.2022201,-70.0714319]); 
+        setNivelZoom(7);   
         break;
         case "san martin":  
         setMapaDepartamento(san_martinJSON.san_martin);
-        setLatLngCenter([-7.2703861,-76.7451582]); 
-        setNivelZoom(6);  
-
-        setLatLngCenterDesktop([-7.1703861,-76.7451582]);
+        setLatLngCenterDesktop([-7.0703861,-76.7451582]);
         setNivelZoomDesktop(7);
+
+        setLatLngCenter([-7.0703861,-76.7451582]); 
+        setNivelZoom(7);  
         break;
         case "tacna":
         setMapaDepartamento(tacnaJSON.tacna);
-        setLatLngCenter([-17.5816511,-70.321977]);      
-        setNivelZoom(7);  
-
-        setLatLngCenterDesktop([-17.6816511,-70.321977]);
+        setLatLngCenterDesktop([-17.4816511,-70.321977]);
         setNivelZoomDesktop(8);
+
+        setLatLngCenter([-17.4816511,-70.321977]);      
+        setNivelZoom(7);  
         break;
         case "tumbes":
         setMapaDepartamento(tumbesJSON.tumbes);
-        setLatLngCenter([-3.9214814,-80.6558616]);    
-        setNivelZoom(8);  
-
-        setLatLngCenterDesktop([-3.9214814,-80.7558616]);
+        setLatLngCenterDesktop([-3.7514814,-80.5558616]);
         setNivelZoomDesktop(9);
+
+        setLatLngCenter([-3.7214814,-80.5558616]);    
+        setNivelZoom(8);  
         break;
         case "ucayali":
         setMapaDepartamento(ucayaliJSON.ucayali);
-        setLatLngCenter([-9.7131766,-73.6195824]);
-        setNivelZoom(6);  
-        
-        setLatLngCenterDesktop([-9.7331766,-73.3195824]);
+        setLatLngCenterDesktop([-9.5331766,-73.2195824]);
         setNivelZoomDesktop(7);
+
+        setLatLngCenter([-9.5131766,-73.5195824]);
+        setNivelZoom(6);  
         break;
 
         default:
         setMapaDepartamento(ucayaliJSON.ucayali);
-        setLatLngCenter([-9.7131766,-73.6195824]);
+        setLatLngCenterDesktop([-9.5331766,-73.2195824]);
+        setNivelZoomDesktop(7);
+
+        setLatLngCenter([-9.5131766,-73.5195824]);
         setNivelZoom(6);  
-        
-        setLatLngCenterDesktop([-9.7331766,-73.3195824]);
-        setNivelZoomDesktop(7);        
         break;
       }     
     }

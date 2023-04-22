@@ -10,8 +10,8 @@ const ScrollUp = () => {
   const ScrollUpContent = useMemo(()=>{
     return styled.div`
       position: absolute;
-      bottom:8%;
-      left: 50%;
+      bottom: 0%;
+      left: 90%;
       transform: translate(-50%, -50%);
       padding: 1rem;
       background-color: #b51d1d;
@@ -22,12 +22,6 @@ const ScrollUp = () => {
       align-items: center;
       justify-content: center;
       
-      @media (min-width: 576px){
-        left: 60%;  
-      }
-      @media (min-width: 768px){
-        left: 90%;  
-      }
       &.dark-mode{
         background-color: #df3333;
       }

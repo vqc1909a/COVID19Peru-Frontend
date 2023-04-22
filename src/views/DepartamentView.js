@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, Fragment, useState, useEffect} from 'react';
+import React, {useContext, useMemo, Fragment, useState, useEffect, useRef} from 'react';
 import {DarkModeContext} from '../context/DarkModeContext';
 import {DepartamentoContext} from '../context/DepartamentoContext';
 import styled from '@emotion/styled';
@@ -16,19 +16,15 @@ import useSeo from '../hooks/useSeo';
 
 const DepartamentView = (props) => {
 
-const {darkMode} = useContext(DarkModeContext);  
-const {departamento, provincia, mapaDepartamento, latLngCenter, nivelZoom, nivelZoomDesktop, latLngCenterDesktop} = useContext(DepartamentoContext);  
-const [provinciasOrdenadas, setProvinciasOrdenadas] = useState([]);
+  const departamentViewRef = useRef();
+  const {isDarkMode} = useContext(DarkModeContext);  
+  const {departamento, provincia, mapaDepartamento, latLngCenter, nivelZoom, nivelZoomDesktop, latLngCenterDesktop} = useContext(DepartamentoContext);  
+  const [provinciasOrdenadas, setProvinciasOrdenadas] = useState([]);
 
-useSeo({title: `${departamento.name} | API Covid19 - Perú`})
+  useSeo({title: `${departamento.name} | API Covid19 - Perú`})
 
-useEffect(()=>{
-  if(Object.keys(departamento).length !== 0){
-    let provincias = departamento.provincias.sort((a, b) => b.positivos - a.positivos).slice(0, 5)
-    setProvinciasOrdenadas(provincias);
-  }
-}, [departamento])
 
+ 
  const Section1Container = useMemo(()=> {
     return styled.section`
       transition: background-color .5s ease-in-out;
@@ -98,9 +94,15 @@ useEffect(()=>{
             padding-bottom: 10vh
           }
           @media (min-width: 992px){
-            padding-bottom: 0;
+            padding-bottom: 0;  
           }
-           margin-bottom: 2rem;
+          margin-bottom: 2rem;
+          >span{
+            margin-bottom: 0rem;
+            @media (min-width: 768px){
+              padding-bottom: .5rem;
+            }
+          }
 
         };
         .details-etapa{
@@ -115,27 +117,33 @@ useEffect(()=>{
     `
   }, []);
 
+  useEffect(()=>{
+    if(Object.keys(departamento).length !== 0){
+      let provincias = departamento.provincias.sort((a, b) => b.positivos - a.positivos).slice(0, 5)
+      setProvinciasOrdenadas(provincias);
+    }
+  }, [departamento])
   
   return (
-    <Fragment>
-      <Section1Container className={darkMode ? 'background-dark' : 'background'}>
+    <div ref={departamentViewRef}>
+      <Section1Container className={isDarkMode ? 'background-dark' : 'background'}>
         <div className="container">
-          <ContentHome result={departamento} provincia={provincia}></ContentHome>
+          <ContentHome peru={departamento} provincia={provincia} departamentViewRef={departamentViewRef}></ContentHome>
           <div className="map-home-wrapper">
             <MapDepartamento departamento={departamento} provincia={provincia} mapa={mapaDepartamento} latLngCenter={latLngCenter} nivelZoom={nivelZoom}></MapDepartamento>
             <MapDepartamentoDesktop departamento={departamento} provincia={provincia} mapa={mapaDepartamento} latLngCenterDesktop={latLngCenterDesktop} nivelZoomDesktop={nivelZoomDesktop}></MapDepartamentoDesktop>
-            <TableDepartamento darkMode={darkMode} provinciasOrdenadas={provinciasOrdenadas} departamento={departamento}></TableDepartamento>
+            <TableDepartamento isDarkMode={isDarkMode} provinciasOrdenadas={provinciasOrdenadas} departamento={departamento}></TableDepartamento>
           </div>
         </div>  
       </Section1Container>
-      <Section2Container className={darkMode ? 'background-dark' : 'background'}>
+      <Section2Container className={isDarkMode ? 'background-dark' : 'background'}>
         <DetailsHeaderHome></DetailsHeaderHome>
         <div className="container">
           {Object.keys(departamento).length !== 0
           ?
           <Fragment>
-            <DetailsTotalHome result={departamento} provincia={provincia}></DetailsTotalHome> 
-            <DetailsEtapaHome result={departamento} provincia={provincia}></DetailsEtapaHome>
+            <DetailsTotalHome peru={departamento} provincia={provincia}></DetailsTotalHome> 
+            <DetailsEtapaHome peru={departamento} provincia={provincia}></DetailsEtapaHome>
           </Fragment>
           :
           <BigSpinner></BigSpinner>
@@ -145,7 +153,7 @@ useEffect(()=>{
         <ScrollUp></ScrollUp>
         <Footer></Footer>
       </Section2Container>
-    </Fragment>
+    </div>
   );
 }
  

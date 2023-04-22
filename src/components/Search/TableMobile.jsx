@@ -4,7 +4,7 @@ import SmallSpinner from '../SmallSpinner';
 import {numberWithComas} from '../../helpers'; 
 import React from 'react';
 
-const TableMobile = ({ darkMode, departamentosOrdenados }) => {
+const TableMobile = ({ isDarkMode, departamentosOrdenados }) => {
 
   const SectionStyled = useMemo(
     () => styled.section`
@@ -33,10 +33,8 @@ const TableMobile = ({ darkMode, departamentosOrdenados }) => {
         justify-content: center;
         align-items: center;
       }
-      padding-bottom: 10vh;
       @media (min-width: 992px) {
         display: none;
-        padding-bottom: 0;
       }
     `,
     []
@@ -46,7 +44,7 @@ const TableMobile = ({ darkMode, departamentosOrdenados }) => {
     <SectionStyled className="search-table-container-mobile">
       <p
         className={`text-normal ${
-          darkMode ? 'text-primary-dark' : 'text-primary'
+          isDarkMode ? 'text-primary-dark' : 'text-primary'
         }`}
       >
         Departamentos con más casos positivos
@@ -56,7 +54,7 @@ const TableMobile = ({ darkMode, departamentosOrdenados }) => {
       ?
       <table
         className={`text-normal ${
-          darkMode ? 'text-primary-dark' : 'text-primary'
+          isDarkMode ? 'text-primary-dark' : 'text-primary'
         }`}
       >
         <tbody>

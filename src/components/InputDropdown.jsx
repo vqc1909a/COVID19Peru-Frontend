@@ -1,28 +1,18 @@
 import styled from '@emotion/styled';
-import { useMemo, useState, useRef, useEffect, useContext } from 'react';
+import { useMemo, useState, useRef, useEffect, useContext} from 'react';
 import {DepartamentoContext} from  '../context/DepartamentoContext';
+import { DarkModeContext } from '../context/DarkModeContext';
+
 import React from 'react';
 
-const InputDropdown = ({ darkMode, setResult, setCargando }) => {
+let provincias = [];
+const InputDropdown = ({ setResult, setCargando, searViewRef}) => {
+  const { isDarkMode } = useContext(DarkModeContext);
   const [inputValue, setInputValue] = useState('');
   const [matches, setMatches] = useState([]);
   const containerSearchRef = useRef();
   const {departamentos} = useContext(DepartamentoContext);
-
-  useEffect(()=>{
-    if(matches.length >= 6){
-      containerSearchRef.current.classList.add('limit')
-    }else{
-      containerSearchRef.current.classList.remove('limit')
-    }
-  }, [matches])
-
-  const provincias = [];
-  departamentos.forEach((departamento)=>{
-    departamento.provincias.forEach((provincia)=>{
-      provincias.push(provincia)
-    })
-  })
+  const inputDropdownRef = useRef();
 
   const FormStyled = useMemo(
     () => styled.form`
@@ -47,7 +37,7 @@ const InputDropdown = ({ darkMode, setResult, setCargando }) => {
             /* border-radius: 0 0 6px 6px; */
            
             li{
-               &:last-child {
+              &:last-child {
                 border-bottom: none;
                 border-radius: none;
               }
@@ -79,6 +69,11 @@ const InputDropdown = ({ darkMode, setResult, setCargando }) => {
             }
             &.dark-mode{
               background-color: rgba(27, 24, 24, .8);
+            }
+            span{
+              &:first-of-type {
+                text-transform: capitalize;
+              }
             }
           }
         }
@@ -153,17 +148,43 @@ const InputDropdown = ({ darkMode, setResult, setCargando }) => {
     setTimeout(()=>{
       setCargando(false);
     }, 2000)
-
   };
 
+  useEffect(()=>{
+    if(matches.length >= 6){
+      containerSearchRef.current.classList.add('limit')
+    }else{
+      containerSearchRef.current.classList.remove('limit')
+    }
+  }, [matches])
+
+  useEffect(() => {
+    provincias = [];
+    if(!departamentos.length) return;
+    departamentos.forEach((departamento)=>{
+      departamento.provincias.forEach((provincia)=>{
+        provincias.push(provincia)
+      })
+    })
+  }, [departamentos])
+
+  useEffect(() => {
+    searViewRef.current.addEventListener('click', function(e){
+      if(!inputDropdownRef.current.contains(e.target)){
+        setMatches([])
+      }
+    })
+    //eslint-disable-next-line
+  }, [])
   return (
-    <FormStyled>
+    <FormStyled ref={inputDropdownRef}>
       <input
-        className={`text-normal ${darkMode ? 'darkth' : 'lightth'}`}
+        className={`text-normal ${isDarkMode ? 'darkth' : 'lightth'}`}
         type="text"
         placeholder="Ejemplo: Chanchamayo"
         value={inputValue}
         onChange={handleChange}
+        onFocus={handleChange}
       />
       <div className="wrapper-suggestions">
         <ul ref={containerSearchRef} className={`suggestions ${inputValue === '' ? 'hidden' : 'shown'}`}>
@@ -171,14 +192,14 @@ const InputDropdown = ({ darkMode, setResult, setCargando }) => {
             <li
               key={i}
               className={`text-normal ${
-                darkMode ? 'text-primary-dark dark-mode' : 'text-primary'
+                isDarkMode ? 'text-primary-dark dark-mode' : 'text-primary'
               }`}
               onClick={(e) => handleClick(e, element)}
             >
               <span>{element.name}</span>
               <span
                 className={`${
-                  darkMode ? 'text-secondary-dark' : 'text-secondary'
+                  isDarkMode ? 'text-secondary-dark' : 'text-secondary'
                 }`}
               >
                 {element.type}

@@ -1,4 +1,4 @@
-import React, {useMemo, Fragment, useContext, useRef, useEffect, useState} from 'react';
+import React, {useMemo, Fragment, useContext, useRef, useEffect} from 'react';
 import {MapContainer, GeoJSON} from 'react-leaflet';
 import styled from '@emotion/styled';
 import L from 'leaflet';
@@ -8,23 +8,20 @@ import {DepartamentoContext} from '../../context/DepartamentoContext';
 
 const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, nivelZoomDesktop}) => {
    const {setProvincia, setLoadingDataProvincia} = useContext(DepartamentoContext);
-   const geojsonref = useRef();
+   const geojsonref = useRef(null);
 
-   const [mimapa, setMiMapa] = useState(false);
-   const setMap = (map) => {
-    setMiMapa(map)
-   }
-   const MapDepartamentoContainer = useMemo(() => {
+  
+  const MapDepartamentoContainer = useMemo(() => {
     return styled.div`
-       position: relative;
-       display: block;
-       width: 100%;
-       height: 50vh;
-       display: none;
-     
-       @media (min-width: 768px){
-         display: block;
-       }
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 50vh;
+      display: none;
+    
+      @media (min-width: 768px){
+        display: block;
+      }
       .leaflet-container {
         width: 100%;
         height: 100%;  
@@ -42,7 +39,7 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
           }
         }
         .leaflet-popup-tip-container{
-            display: none;
+            transform: scale(.6);
         }
         .leaflet-popup{
         }
@@ -96,7 +93,7 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
   const highlightFeature = (e) => {
     let layer = e.target;
     layer.setStyle({
-        weight: 4,
+        weight: 3,
         color: 'white',
         dashArray: '',
         fillOpacity: 0.7
@@ -106,7 +103,8 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
     }
     // let casos = layer.feature.properties.CASOS;
     // let departamento = layer.feature.properties.DEPARTAMEN;
-    layer.openPopup();    
+    layer.openPopup()
+  
   }
   const resetHighlight = (e) => {
     let layer = e.target;
@@ -118,7 +116,6 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
     });
   }
   const eventoClick = (e) => {
-    console.log("Click departamento");
     geojsonref.current.resetStyle();
     let layer = e.target;
     layer.setStyle({
@@ -129,23 +126,58 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
         dashArray: '3',
         fillOpacity: 1
     });
-
+    layer.openPopup();    
     let word = e.target.feature.properties.PROVINCIA;
     // const word_full = `/\b${word}\b/`;
     const provinciaSearch = departamento.provincias.find((provincia) => {
       // const regex = new RegExp(word, 'ig');
       return provincia.name.toLowerCase() === word.toLowerCase();
     })
-    setProvincia(provinciaSearch);
+    setProvincia({...provinciaSearch});
     setLoadingDataProvincia(true);
     setTimeout(()=>{
       setLoadingDataProvincia(false);
-    }, 2000)
+    }, 1500)
   }
-  useEffect(()=> {
-    if(Object.keys(provincia).length !== 0 && mimapa){
-      geojsonref.current.eachLayer(function(layer){
+
+  const onEachFeature = (geoProvincia, layer) => {
+    layer.on({
+      mouseover: highlightFeature,
+      mouseout: resetHighlight,
+      click: (e) => eventoClick(e)
+    });
+    layer.bindPopup(`
+    <p style="font-size: 1.2rem; font-family: Rubik Medium">${geoProvincia.properties.PROVINCIA}</p>
+    <p style="color: red; font-size: 2rem; font-family: Rubik SemiBold">${geoProvincia.properties.CASOS}</p>
+    <span style="display: block; text-align: center">Casos Positivos</span>
+    `);
+    //Evento que se ejecuta cuando se agrega un layer correctamente
+    layer.on('add', () => {
+      //Comprobamos que el layer agregado se la provincia seleccionada en la busqueda, siempre y cuando esta exista
+      if(Object.keys(provincia).length){
         if(layer.feature.properties.PROVINCIA.toLowerCase() === provincia.name.toLowerCase()){
+          layer.setStyle({
+              fillColor: "#ffff40",
+              weight: 2,
+              opacity: 1,
+              color: 'white',
+              dashArray: '3',
+              fillOpacity: 1
+          });
+          layer.openPopup();
+        }
+      }
+    });
+    // layer.bindTooltip(departamento.properties.PROVINCIA, {permanent: true, direction: 'center', className: 'myCSSClass'});
+   
+  }
+
+  useEffect(()=> {
+    if(Object.keys(provincia).length !== 0 && geojsonref.current){
+      geojsonref.current.eachLayer(function(layer){
+        layer.closePopup();
+        if(layer.feature.properties.PROVINCIA.toLowerCase() === provincia.name.toLowerCase()){
+          //Aqui reseteamos todo el gesojsonref
           geojsonref.current.resetStyle();
           layer.setStyle({
               fillColor: "#ffff40",
@@ -155,26 +187,13 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
               dashArray: '3',
               fillOpacity: 1
           });
+          layer.openPopup();
         }
       });
     }
+  }, [provincia])
 
-  }, [provincia, mimapa])
-
-
-  const onEachFeature = (provincia, layer) => {
-    layer.on({
-      mouseover: highlightFeature,
-      mouseout: resetHighlight,
-      click: (e) => eventoClick(e)
-    })
-    layer.bindPopup(`
-    <p style="font-size: 1.2rem; font-family: Rubik Medium">${provincia.properties.PROVINCIA}</p>
-    <p style="color: red; font-size: 2rem; font-family: Rubik SemiBold">${provincia.properties.CASOS}</p>
-    <span style="display: block; text-align: center">Casos Positivos</span>
-    `);
-    // layer.bindTooltip(departamento.properties.PROVINCIA, {permanent: true, direction: 'center', className: 'myCSSClass'});
-  }
+ 
 
   let component;
 
@@ -188,8 +207,8 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
      provincia.properties.CASOS = provincia_departamento.positivos;
     }) 
     component = <MapDepartamentoContainer className='map-home'>
-       <MapContainer whenCreated = {(map) => setMap(map)} center={latLngCenterDesktop} zoom={nivelZoomDesktop}  scrollWheelZoom={false} >
-          <GeoJSON ref={geojsonref} data={mapa} style={mapStyle} onEachFeature={onEachFeature}  />
+       <MapContainer center={latLngCenterDesktop} zoom={nivelZoomDesktop}  scrollWheelZoom={false}>
+          <GeoJSON ref={geojsonref} data={mapa} style={mapStyle} onEachFeature={onEachFeature} />
       </MapContainer>
       <div style={{position: "absolute", right: "5%", top: "40vh", zIndex: "2"}}>
         <Leyenda departamento={true}></Leyenda>                   

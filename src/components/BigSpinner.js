@@ -3,10 +3,10 @@ import '../styles/BigSpinner.css';
 import {DarkModeContext} from '../context/DarkModeContext';
 
 const BigSpinner = () => {
-  const {darkMode} = useContext(DarkModeContext);
+  const {isDarkMode} = useContext(DarkModeContext);
 
   return (
-      <div className={`sk-circle ${darkMode ? 'dark-mode': ''}`}>
+      <div className={`sk-circle ${isDarkMode ? 'dark-mode': ''}`}>
         <div className="sk-circle1 sk-child"></div>
         <div className="sk-circle2 sk-child"></div>
         <div className="sk-circle3 sk-child"></div>

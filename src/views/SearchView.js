@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useContext, useMemo, useEffect, useState } from 'react';
+import React, { useContext, useMemo, useEffect, useState, useRef } from 'react';
 import DarkMode from '../components/DarkMode';
 import FooterMobile from '../components/layouts/FooterMobile';
 import SearchPart from '../components/Search/SearchPart';
@@ -12,16 +12,11 @@ import useSeo from '../hooks/useSeo';
 const SearchView = () => {
   const {departamentos} = useContext(DepartamentoContext);
   const [departamentosOrdenados, setDepartamentosOrdenados] = useState([]);
-  const { darkMode } = useContext(DarkModeContext);
+  const { isDarkMode } = useContext(DarkModeContext);
 
   useSeo({title: "Búsqueda | API Covid19 - Perú"})
-  
-  useEffect(() => {
-    if(departamentos.length !== 0){
-       setDepartamentosOrdenados(departamentos.sort((a, b) => b.positivos - a.positivos));
-    }
-  }, [departamentos])
 
+  const searViewRef = useRef();
   const SearchViewContainer = useMemo(
     () => styled.div`
       transition: background-color 0.5s ease-in-out;
@@ -41,9 +36,16 @@ const SearchView = () => {
     []
   );
 
+  useEffect(() => {
+    if(departamentos.length !== 0){
+       setDepartamentosOrdenados(departamentos.sort((a, b) => b.positivos - a.positivos));
+    }
+  }, [departamentos])
+
   return (
     <SearchViewContainer
-      className={`${darkMode ? 'background-dark' : 'background'}`}
+      className={`${isDarkMode ? 'background-dark' : 'background'}`}
+      ref={searViewRef}
     >
       <DarkMode />
       {/* <svg
@@ -60,10 +62,10 @@ const SearchView = () => {
         />
       </svg> */}
       <div className="container">
-        <SearchPart darkMode={darkMode} />
+        <SearchPart isDarkMode={isDarkMode} searViewRef={searViewRef}/>
         {/* <InputDropdown darkMode={darkMode} /> */}
-        <TableMobile darkMode={darkMode} departamentosOrdenados={departamentosOrdenados} />
-        <TableDesktop darkMode={darkMode} departamentosOrdenados={departamentosOrdenados} />
+        <TableMobile isDarkMode={isDarkMode} departamentosOrdenados={departamentosOrdenados} />
+        <TableDesktop isDarkMode={isDarkMode} departamentosOrdenados={departamentosOrdenados} />
         <FooterMobile />
       </div>
     </SearchViewContainer>

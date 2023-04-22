@@ -11,7 +11,7 @@ import BigSpinner from '../BigSpinner';
 import SmallSpinner from '../SmallSpinner';
 import { useLocation } from "react-router-dom";
 
-const ContentHome = ({peru, provincia}) => {
+const ContentHome = ({peru, provincia, departamentViewRef}) => {
   const {pathname} = useLocation();
   const {departamento, loadingDataProvincia, setLoadingDataProvincia} = useContext(DepartamentoContext);
   const { isDarkMode } = useContext(DarkModeContext);
@@ -122,7 +122,7 @@ const ContentHome = ({peru, provincia}) => {
       {/* Icono de retorno en las paginas de departamento */}
       {pathname.search(/departamento/ig) !== -1 ? <Return></Return> : ""}
 
-      {(pathname !== "/" & window.innerWidth <= 768) ? <div className="wrapper-input1"><InputDropdownDepartamento darkMode={isDarkMode} setLoading={setLoadingDataProvincia}></InputDropdownDepartamento></div> : ""}
+      {(pathname !== "/" & window.innerWidth <= 768) ? <div className="wrapper-input1"><InputDropdownDepartamento setLoading={setLoadingDataProvincia} departamentViewRef={departamentViewRef}></InputDropdownDepartamento></div> : ""}
       
       <h1 className="text-big">
         <span
@@ -133,9 +133,9 @@ const ContentHome = ({peru, provincia}) => {
           {Object.keys(provincia).length !== 0  ? provincia.name.toUpperCase() : "Estado del covid-19"}
         </span>
         {/* Dependiendo de la ruta, pintamos el nombre del pais peru o departamento */}
-        <br></br> {pathname === '/' ? (Object.keys(peru).length !== 0  ? peru.name.toUpperCase() : "...Cargando") : (!Object.keys(departamento).length ? departamento.name.toUpperCase() : "...Cargando")}
+        <br></br> {pathname === '/' ? (Object.keys(peru).length !== 0  ? peru.name.toUpperCase() : "...Cargando") : (Object.keys(departamento).length ? departamento.name.toUpperCase() : "...Cargando")}
       </h1>
-      {(pathname !== "/" & window.innerWidth > 768) ? <div className="wrapper-input2"><InputDropdownDepartamento  darkMode={isDarkMode} setLoading={setLoadingDataProvincia}></InputDropdownDepartamento></div> : ""}
+      {(pathname !== "/" & window.innerWidth > 768) ? <div className="wrapper-input2"><InputDropdownDepartamento  setLoading={setLoadingDataProvincia} departamentViewRef={departamentViewRef}></InputDropdownDepartamento></div> : ""}
       
       {!loadingDataProvincia
       ?

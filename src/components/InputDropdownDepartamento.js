@@ -1,22 +1,18 @@
 import styled from '@emotion/styled';
 import React, { useMemo, useState, useRef, useEffect, useContext } from 'react';
+import { DarkModeContext } from '../context/DarkModeContext';
 import {DepartamentoContext} from  '../context/DepartamentoContext';
 
-const InputDropdownDepartamento = ({ darkMode, setLoading}) => {
+const InputDropdownDepartamento = ({setLoading, departamentViewRef}) => {
+  const { isDarkMode } = useContext(DarkModeContext);
+
   const [inputValue, setInputValue] = useState('');
   const [matches, setMatches] = useState([]);
   const containerSearchRef = useRef();
+  const inputDropdownRef = useRef();
   const {departamento, setProvincia} = useContext(DepartamentoContext);
   
-  useEffect(()=>{
-    if(matches.length >= 6){
-      containerSearchRef.current.classList.add('limit')
-    }else{
-      containerSearchRef.current.classList.remove('limit')
-    }
-  }, [matches])
-
-
+ 
   const FormStyled = useMemo(
     () => styled.form`
       width: 100%;
@@ -46,7 +42,6 @@ const InputDropdownDepartamento = ({ darkMode, setLoading}) => {
             }
           }
          
-
           li {
             background-color: rgba(247, 245, 245, .8);
             transition: background-color .5s ease-in-out;
@@ -62,6 +57,11 @@ const InputDropdownDepartamento = ({ darkMode, setLoading}) => {
             }
             &.dark-mode{
               background-color: rgba(27, 24, 24, .8);
+            }
+            span{
+              &:first-of-type {
+                text-transform: capitalize;
+              }
             }
           }
         }
@@ -105,16 +105,12 @@ const InputDropdownDepartamento = ({ darkMode, setLoading}) => {
     []
   );
   const findMatchesProvincias = (word, provincias) => {
+    //Si word es vacio, de igual forma lo encuentra en el indice cero en cualqueir palabra
     return provincias.filter((provincia) => {
       const regex = new RegExp(word, 'i');
       return provincia.name.match(regex);
     });
   };
-
-  const handleFocus = () => {
-    const matchesProvincias = departamento.provincias;
-    setMatches([...matchesProvincias]);
-  }
   
   const handleChange = (e) => {
     e.preventDefault();
@@ -124,26 +120,47 @@ const InputDropdownDepartamento = ({ darkMode, setLoading}) => {
     setMatches([...matchesProvincias]);
   };
 
+  const handleFocus = () => {
+    const matchesProvincias = departamento.provincias;
+    setMatches([...matchesProvincias]);
+  }
+
   const handleClick = (e, element) => {
     const value = e.currentTarget.firstChild.textContent;
     setInputValue(value);
     setMatches([]);
-    setProvincia(element);
+    setProvincia({...element});
     setLoading(true);
     setTimeout(()=>{
       setLoading(false);
     }, 2000)
   };
 
+  useEffect(()=>{
+    if(matches.length >= 6){
+      containerSearchRef.current.classList.add('limit')
+    }else{
+      containerSearchRef.current.classList.remove('limit')
+    }
+  }, [matches])
+
+  useEffect(() => {
+    departamentViewRef.current.addEventListener('click', function(e){
+      if(!inputDropdownRef.current.contains(e.target)){
+        setMatches([])
+      }
+    })
+    //eslint-disable-next-line
+  }, [])
   return (
-    <FormStyled>
+    <FormStyled ref={inputDropdownRef}>
       <input
-        className={`text-normal ${darkMode ? 'darkth' : 'lightth'}`}
+        className={`text-normal ${isDarkMode ? 'darkth' : 'lightth'}`}
         type="text"
         placeholder="Seleccione una provincia"
         value={inputValue}
-        onFocus={handleFocus}
         onChange={handleChange}
+        onFocus={handleFocus}
       />
       <div className="wrapper-suggestions">
         <ul ref={containerSearchRef} className={`suggestions`}>
@@ -152,14 +169,14 @@ const InputDropdownDepartamento = ({ darkMode, setLoading}) => {
             <li
               key={i}
               className={`text-normal ${
-                darkMode ? 'text-primary-dark dark-mode' : 'text-primary'
+                isDarkMode ? 'text-primary-dark dark-mode' : 'text-primary'
               }`}
               onClick={(e) => handleClick(e, element)}
             >
               <span>{element.name}</span>
               <span
                 className={`${
-                  darkMode ? 'text-secondary-dark' : 'text-secondary'
+                  isDarkMode ? 'text-secondary-dark' : 'text-secondary'
                 }`}
               >
                 {element.type}

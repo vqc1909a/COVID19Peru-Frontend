@@ -4,7 +4,7 @@ import BigSpinner from '../BigSpinner';
 import {numberWithComas} from '../../helpers';
 import React from 'react';
  
-const TableDesktop = ({ darkMode, provinciasOrdenadas, departamento}) => {
+const TableDesktop = ({ isDarkMode, provinciasOrdenadas, departamento}) => {
 
   const SectionStyled = useMemo(
     () => styled.section`
@@ -83,7 +83,7 @@ const TableDesktop = ({ darkMode, provinciasOrdenadas, departamento}) => {
     <SectionStyled className="search-table-container-desktop">
       <p
         className={`text-medium ${
-          darkMode ? 'text-primary-dark' : 'text-primary'
+          isDarkMode ? 'text-primary-dark' : 'text-primary'
         }`}
       >
         Provincias más infectadas de {departamento.name}
@@ -92,12 +92,12 @@ const TableDesktop = ({ darkMode, provinciasOrdenadas, departamento}) => {
       ?
         <table
         className={`text-normal ${
-          darkMode ? 'text-primary-dark' : 'text-primary'
+          isDarkMode ? 'text-primary-dark' : 'text-primary'
         }`}
       >
         <thead
-          className={`${darkMode ? 'special-color-dark' : 'special-color'} ${
-            darkMode ? 'dark-back' : 'light-back'
+          className={`${isDarkMode ? 'special-color-dark' : 'special-color'} ${
+            isDarkMode ? 'dark-back' : 'light-back'
           }`}
         >
           <tr>
@@ -108,7 +108,7 @@ const TableDesktop = ({ darkMode, provinciasOrdenadas, departamento}) => {
         <tbody>
           {provinciasOrdenadas.map((provincia, i) => (
             <tr key={i}>
-              <td>{numberWithComas(provincia.name)}</td>
+              <td style={{textTransform: "capitalize"}}>{provincia.name}</td>
               <td>{numberWithComas(provincia.positivos)}</td>
             </tr>
           ))}

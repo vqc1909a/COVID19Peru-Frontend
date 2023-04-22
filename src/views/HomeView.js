@@ -84,10 +84,12 @@ const Home = () => {
         };
         .details-etapa{
           flex: 1 1 38.4rem;
-          padding-bottom: 10vh;
+          margin-bottom: 2rem;
           @media (min-width: 992px){
-            padding-bottom: 0;
-            margin-bottom: 2rem;
+            margin-bottom: 0rem;
+          }
+          h2{
+            margin-top: 4rem
           }
         }
       }
