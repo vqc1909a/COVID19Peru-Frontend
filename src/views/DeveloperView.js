@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import MainContent from '../components/Developer/MainContent';
 import Aside from '../components/Developer/Aside';
 import useSeo from '../hooks/useSeo';
+import DarkMode from '../components/DarkMode';
+import ScrollUp from '../components/ScrollUp';
 
 const Developer = () => {
   const main_content = useRef();
@@ -10,9 +12,14 @@ const Developer = () => {
   const SectionContainer = useMemo(()=> {
     return styled.section`
       min-height: 100vh;
-      display: flex;
+
+      @media only screen and (min-width: 1024px){
+        display: flex;
+      }
       .main-content{
-        flex: 8;
+        @media only screen and (min-width: 1024px){
+          flex: 8; 
+        }
         order: 2;
         padding: 2.5rem;
         background-color: #3B3B3B;
@@ -100,12 +107,15 @@ const Developer = () => {
               margin: 0;
             }
           }
+          .response{
+            margin-left: 1.5rem;
+          }
           &__up{
             margin: 1rem 0rem 1rem 0rem;
           }
           &__down{
-            margin: 1rem 0rem 2rem 2rem;
-            font-size: calc(0.7rem + 0.5vw);
+            margin: 1rem 0rem 2rem 1.5rem;
+            font-size: calc(0.6rem + 0.5vw);
           }
         }
         .table-small{
@@ -113,7 +123,11 @@ const Developer = () => {
         }
       }
       .sidebar{
-        flex: 2;
+        display: none;
+        @media only screen and (min-width: 1024px){
+          flex: 2; 
+          display: initial;
+        }
         order: 1;
         padding: 1.5rem;
         transition: background-color .5s ease-in-out;
@@ -132,8 +146,7 @@ const Developer = () => {
               display: inline-block;
               position: relative;
               cursor: pointer;
-              transition: color .5s ease-in-out;
-
+              transition: color .3s ease-in-out;
               &::after{
                 content: '';
                 position: absolute;
@@ -144,7 +157,7 @@ const Developer = () => {
                 background-color: #df3333;
                 transform: scaleX(0);
                 transform-origin: left center;
-                transition: transform .5s ease-in-out;
+                transition: transform .3s ease-in-out;
               }
               &:hover{
                 &::after{
@@ -166,19 +179,14 @@ const Developer = () => {
     const distance = document.querySelector(`.${e.currentTarget.dataset.class}`).getBoundingClientRect().top;
     main_content.current.scrollTo({top: distance + main_content.current.scrollTop - height_navbar, behavior: "smooth"});
   }
-  
-  const component = window.innerWidth >= 1024 
-    ?
-    <SectionContainer>
-      <MainContent main_content={main_content} ></MainContent>
-      <Aside scrollDown={scrollDown}></Aside>
-    </SectionContainer>
-    :
-    null
-    
+      
   return (
     <>
-      {component}
+      <SectionContainer>
+        <DarkMode />
+        <MainContent main_content={main_content} ></MainContent>
+        <Aside scrollDown={scrollDown}></Aside>
+      </SectionContainer>
     </>
     
   );

@@ -1,9 +1,12 @@
 import React, { useMemo, useContext } from 'react';
 import styled from '@emotion/styled';
 import { DarkModeContext } from '../../context/DarkModeContext';
+import { PeruContext } from '../../context/PeruContext';
+
 
 const FooterMobile = () => {
   const { isDarkMode } = useContext(DarkModeContext);
+  const { peru } = useContext(PeruContext);
 
   const FooterMobileContainer = useMemo(() => {
     return styled.footer`
@@ -16,7 +19,12 @@ const FooterMobile = () => {
       }
     `;
   }, []);
-  const fecha = new Date();
+  
+  let partsDate = peru?.fecha?.slice(0, 10).split("-") || [0, 0, 0];
+  let year = partsDate[0];
+  let month = partsDate[1];
+  let day = partsDate[2];
+
   return (
     <FooterMobileContainer>
       <p
@@ -24,8 +32,7 @@ const FooterMobile = () => {
           isDarkMode ? 'text-secondary-dark' : 'text-secondary'
         }`}
       >
-        Actualizado el {fecha.getDate() < 10 ? `0${fecha.getDate()}` : fecha.getDate()} / {fecha.getMonth() + 1 <= 9 ? `0${fecha.getMonth() + 1}` : fecha.getMonth() + 1} /{' '}
-        {fecha.getFullYear()}
+        Actualizado el {day}/{month}/{year}
       </p>
     </FooterMobileContainer>
   );

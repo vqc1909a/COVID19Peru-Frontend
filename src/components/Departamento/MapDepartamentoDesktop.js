@@ -76,7 +76,7 @@ const MapDepartamento = ({departamento, provincia, mapa, latLngCenterDesktop, ni
       fillColor: getColor(feature.properties.CASOS),
       weight: 2,
       opacity: 1,
-      color: 'white ',
+      color: 'white',
       dashArray: '3',
       fillOpacity: 1
     }

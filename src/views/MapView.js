@@ -50,6 +50,7 @@ const MapView = () => {
     mymap = map
     mymap.locate()
    
+    //Removiendo los layers de provincia para tener los layers de departamentos por defecto
     geojsonref.current.eachLayer(function(layer){
       if(layer.feature.properties.PROVINCIA){
           layersProvincias.push(layer);
@@ -69,63 +70,66 @@ const MapView = () => {
              fillColor: getColorProvincia(layer.feature.properties.CASOS),
              weight: 2,
              opacity: 1,
-             color: 'white ',
+             color: 'yellow',
              dashArray: '3',
              fillOpacity: 1
            });
          }
       });
-      
     })
     mymap.on('zoomend', function(e){
       console.log(mymap.getZoom())
-        
-          if(mymap.getZoom() <= 5){
-            layersProvincias.forEach((layerProvincia)=>{
-                geojsonref.current.removeLayer(layerProvincia);
-            })
-            geojsonref.current.resetStyle();
-            geojsonref.current.eachLayer(function(layer){
-              layer.openTooltip();
-              layer.closePopup();
-            });
-          }        
-          if(mymap.getZoom() >= 9){
-            layersProvincias.forEach((layerProvincia)=>{
-                geojsonref.current.addLayer(layerProvincia);
-            })
-          }
+      //Cuando el zoom es menor o igual a 5 tendremos que reestablecer los layers por departamento
+      if(mymap.getZoom() <= 6){
+        layersProvincias.forEach((layerProvincia)=>{
+            geojsonref.current.removeLayer(layerProvincia);
+        })
+        geojsonref.current.eachLayer(function(layer){
+          layer.openTooltip();
+          layer.closePopup();
+        });
+      }        
     })
   }
 
   
-  
-
-  //ESTILOS PARA CADA DEPARTAMENTO  
+  //ESTILOS PARA CADA DEPARTAMENTO Y PROVINCIA  
   const mapStyle = (feature) => {
-    return {
-      fillColor: getColor(feature.properties.CASOS),
-      weight: 2,
-      opacity: 1,
-      color: 'white',
-      dashArray: '3',
-      fillOpacity: 1
+    if(feature.properties.PROVINCIA){
+      return {
+        fillColor: getColorProvincia(feature.properties.CASOS),
+        weight: 2,
+        opacity: 1,
+        color: 'yellow',
+        dashArray: '3',
+        fillOpacity: 1
+      };
+    }else{
+     return {
+        fillColor: getColor(feature.properties.CASOS),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 1
+      }
     }
+    
   };
   const getColor = (casos) => {
-    return casos > 100000  ? '#880909' :
-          casos > 40000   ? '#C42C2C' :
-          casos > 20000   ? '#E35050' :      
-          casos > 10000   ? '#EA7878' :
-                      '#E8DFDF';      
+    return casos > 100000  ? 'rgba(136, 9, 9, 1)' :
+          casos > 40000   ? 'rgba(196, 44, 44, 1)' :
+          casos > 20000   ? 'rgba(227, 80, 80, 1)' :      
+          casos > 10000   ? 'rgba(234, 120, 120, 1)' :
+                      'rgba(232, 223, 223, 1)';      
   }
   
   const getColorProvincia = (casos) => {
-    return casos > 25000  ? '#880909' :
-          casos > 10000   ? '#C42C2C' :
-          casos > 5000   ? '#E35050' :      
-          casos > 2500   ? '#EA7878' :
-                      '#E8DFDF';      
+    return casos > 25000  ? 'rgba(136, 9, 9, 1)' :
+          casos > 10000   ? 'rgba(196, 44, 44, 1)' :
+          casos > 5000   ? 'rgba(227, 80, 80, 1)' :      
+          casos > 2500   ? 'rgba(234, 120, 120, 1)' :
+                      'rgba(232, 223, 223, 1)';      
   }
 
   //EVENTOS
@@ -133,41 +137,86 @@ const MapView = () => {
     let departamento = e.target;
     console.log(mymap.getZoom())
     console.log("haciendo bounds")
-    if(!departamento.feature.properties.PROVINCIA){
+    const mapBounds = mymap.getBounds();
+    const layerBounds = departamento.getBounds();
 
-      mymap.fitBounds(departamento.getBounds());
-
+    //Haciendo zoom al layer seleccionado, y comprobado que este layer este ocupando todo el espacio de la pantalla
+    mymap.fitBounds(layerBounds);  
+    if(mapBounds.contains(layerBounds)){
       layersProvincias.forEach((layerProvincia)=>{
+        //Añadimos los layers del departamento seleccionado
         if(layerProvincia.feature.properties.DEPARTAMEN === departamento.feature.properties.DEPARTAMEN){
           geojsonref.current.addLayer(layerProvincia);
         }else{
           geojsonref.current.removeLayer(layerProvincia);
+
         }
       })
+      //Abrimos todos los tooltips de los layers
+      geojsonref.current.eachLayer(function(layer){
+        layer.openTooltip();
+      });
+      //Y cerramos el tooltip del layer (departamento) seleccionado
+      departamento.closeTooltip();
     }
   }
   const resetHighlight = (e) => {
     let layer = e.target;
-    layer.setStyle({
+
+     if(layer.feature.properties.PROVINCIA){
+      layer.setStyle({
+        fillColor: getColorProvincia(layer.feature.properties.CASOS),
         weight: 2,
+        opacity: 1,
+        color: 'yellow',
+        dashArray: '3',
+        fillOpacity: 1
+      })
+     }else{
+      layer.setStyle({
+        fillColor: getColor(layer.feature.properties.CASOS),
+        weight: 2,
+        opacity: 1,
         color: 'white',
         dashArray: '3',
         fillOpacity: 1
-    });
+      });
+     }
+   
   }
 
   const highlightFeature = (e) => {
     let layer = e.target;
-    layer.setStyle({
-        weight: 3,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
+    console.log({
+      tieneProvincia: layer.feature.properties.PROVINCIA
+    })
+    if(layer.feature.properties.PROVINCIA){
+      let rgbaArray = getColorProvincia(layer.feature.properties.CASOS).match(/(\d+),\s*(\d+),\s*(\d+),\s*(\d+)/);
+      let newColor = `rgba(${rgbaArray[1]}, ${rgbaArray[2]}, ${rgbaArray[3]}, 0.8)`;
+      layer.setStyle({
+          fillColor:  newColor,
+          weight: 3,
+          color: 'yellow',
+          dashArray: '0',
+          fillOpacity: 1,        
+      });
+    }else{
+      let rgbaArray = getColor(layer.feature.properties.CASOS).match(/(\d+),\s*(\d+),\s*(\d+),\s*(\d+)/);
+      let newColor = `rgba(${rgbaArray[1]}, ${rgbaArray[2]}, ${rgbaArray[3]}, 0.8)`;
+      layer.setStyle({
+          fillColor:  newColor,
+          weight: 3,
+          color: 'white',
+          dashArray: '0',
+          fillOpacity: 1,        
+      });
+    }
+   
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-      layer.bringToFront();
+        layer.bringToFront();
     }
     layer.openPopup();
+    
   }
 
   const onEachFeature = (departamento, layer) => {
@@ -184,7 +233,7 @@ const MapView = () => {
       
     `)
 
-    layer.bindTooltip(layer.feature.properties.PROVINCIA ? layer.feature.properties.PROVINCIA : layer.feature.properties.DEPARTAMEN,{permanent: true, direction: 'center', className: 'myCSSClass'}).closeTooltip();;
+    layer.bindTooltip(layer.feature.properties.PROVINCIA ? layer.feature.properties.PROVINCIA : layer.feature.properties.DEPARTAMEN,{permanent: true, direction: 'center', className: 'myCSSClass'});
   }
 
   const SetViewOnClick = ({animateRef}) => {
@@ -208,7 +257,7 @@ const MapView = () => {
 
       return position === null ? null : (
         <Marker position={position}>
-          <Popup>You are here</Popup>
+          <Popup>¡Tu Estas aquí!</Popup>
         </Marker>
       )
   }
@@ -227,27 +276,26 @@ const MapView = () => {
           p{
             margin: 0
           }
+          .leaflet-popup-content{
+            margin: 1.5rem 2rem
+          }
         }
         .leaflet-popup-tip-container{
-          display: none;
+          transform: scale(.6);
         }
         .leaflet-popup{
           margin-bottom: 2rem;
         }
       }
       .myCSSClass {
-        font-size: 1rem;
-        font-weight: 800;
-        color: black;
-        background-color: none;
-        border-color: none;
-        background: none;
-        border: none;
-        box-shadow: none;
-        margin: 0px;
-        cursor: none;
-        direction: 'center';
-        fill: false;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #000;
+        font-family: Arial, sans-serif;
+        font-size: .8rem;
+        font-weight: bold;
+        padding: .1rem .3rem;
+        border-radius: 2px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       }
       .leaflet-tooltip-left.myCSSClass::before {
         border-left-color: transparent;
@@ -263,7 +311,7 @@ const MapView = () => {
     component = <div className="big-spinner"><BigSpinner></BigSpinner></div>
   }else{
     peruJSON.peru.forEach((departamento, i) => {
-     departamento.properties.CASOS = peru.mapa_hijos[i];
+     departamento.properties.CASOS = departamentos[i].positivos;
     }) 
     amazonasJSON.amazonas.forEach((provincia, i) => {
       provincia.properties.CASOS = departamentos.find((departamento)=> departamento.name.toLowerCase() === "amazonas").provincias[i].positivos;
@@ -342,7 +390,7 @@ const MapView = () => {
     })
 
     component =  <MapSectionContainer>
-        <MapContainer whenCreated = {(map) => setMap(map)}  center={[-9.068272,-74.5763731]} zoom={6} scrollWheelZoom={true} >
+        <MapContainer whenCreated = {(map) => setMap(map)}  center={[-9.189967, -75.015152]} zoom={6} scrollWheelZoom={true} >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidnFjMTkwOWEiLCJhIjoiY2tnb2Q2dmJwMGNzNTJwb2lkM2I5cnYyNyJ9.v3Rx_381xfFtDAm_Qu-Tnw"
@@ -351,7 +399,6 @@ const MapView = () => {
             <SetViewOnClick animateRef={true} />
 
             <LayersControl position="topright">
-
               <LayersControl.BaseLayer checked name="Carto Dark Mode No Labels">
                 <TileLayer
                   attribution='<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>'
@@ -365,7 +412,6 @@ const MapView = () => {
                   url="http://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
                 />
               </LayersControl.BaseLayer>
-
 
               <LayersControl.BaseLayer name="Carto Dark Mode">
                 <TileLayer
@@ -404,7 +450,7 @@ const MapView = () => {
             </LayersControl>
             <LocationMarker />
         </MapContainer>
-         <div style={{position: "absolute", left: "5%", bottom: "3%", zIndex: "2"}}>
+        <div style={{position: "absolute", left: "5%", bottom: "3%", zIndex: "2"}}>
           <LeyendaMap></LeyendaMap>                   
         </div>  
     </MapSectionContainer>

@@ -29,7 +29,7 @@ const Footer = () => {
  }, [])
   return (
     <FooterContent className={isDarkMode ? 'dark-mode': ''}>
-      <p className={isDarkMode ? 'text-primary-dark': 'text-primary'}>Perú - {new Date().getFullYear()}</p>
+      <p className={isDarkMode ? 'text-primary-dark': 'text-primary'}>Copyright © {new Date().getFullYear()}, vqc1909a. Todos los derechos reservados.</p>
     </FooterContent>
   );
 }

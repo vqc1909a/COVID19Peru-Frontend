@@ -64,8 +64,6 @@ const MapHome = ({departamentos}) => {
     `
   }, []);
   
-
-  
   //------------------------------ESTILOS PARA CADA DEPARTAMENTO---------------------------  
   const mapStyle = (feature) => {
     return {

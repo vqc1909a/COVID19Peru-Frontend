@@ -25,6 +25,9 @@ const ScrollUp = () => {
       &.dark-mode{
         background-color: #df3333;
       }
+      @media only screen and (min-width: 768px){
+        display: none;
+      }
     `
   }, [])
 
