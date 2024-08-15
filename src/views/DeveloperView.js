@@ -4,7 +4,7 @@ import MainContent from '../components/Developer/MainContent';
 import Aside from '../components/Developer/Aside';
 import useSeo from '../hooks/useSeo';
 import DarkMode from '../components/DarkMode';
-import ScrollUp from '../components/ScrollUp';
+// import ScrollUp from '../components/ScrollUp';
 
 const Developer = () => {
   const main_content = useRef();

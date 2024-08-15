@@ -10,7 +10,7 @@ const MainContent = ({main_content}) => {
     <hr className={`${!isDarkMode ? '': 'dark-mode'}`} />
     <div className="intro">
       <p className={`text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Bienvenido a la <b>API Covid19 - Perú </b>. Está API fue elaborada gracias a los datos abiertos que nos provee el <b>MINSA</b> sobre el estado del COVID-19 del Perú (<a target="_blank" without rel="noreferrer" href="https://www.datosabiertos.gob.pe/group/datos-abiertos-de-covid-19" className={`text-normal ${!isDarkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{textDecoration: "underline"}}>https://www.datosabiertos.gob.pe/group/datos-abiertos-de-covid-19</a>)</p>
-      <p className={`text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Esta documentación debe proporcionarle toda la información necesaria sobre el estado del COVID-19 a nivel nacional, departamental y provincial en el Perú, cada una de las informaciones resueltas contiene datos como la cantidad de casos positivos en sus diferentes variaciones(total, hombres y mujeres y por etapa de vida), la cantidad de decesos (total, hombre, mujeres y por etapa de vida), la cantidad poblacional demográfica y por último el año, mes y día de cuando fue recopilado cada uno de estos datos.</p>
+      <p className={`text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Esta documentación debe proporcionarle toda la información necesaria sobre el estado del COVID-19 a nivel nacional, departamental y provincial en el Perú, cada una de las informaciones resueltas contiene datos como la cantidad de casos positivos en sus diferentes variaciones(total, hombres y mujeres y por etapa de vida), la cantidad de decesos (total, hombre, mujeres y por etapa de vida), así como también la cantidad poblacional demográfica y el año, mes y día de cuando fue recopilado cada uno de estos datos.</p>
     </div>  
     <div className="limit">
       <h3 className={`text-normal-bg ${!isDarkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Limite de Peticiones</h3>
@@ -70,22 +70,21 @@ const MainContent = ({main_content}) => {
 {
   "name": "peru",
   "poblacion": 32526084,
-  "positivos": 4499001,
-  "hombres_infectados": 2173705,
-  "mujeres_infectados": 2325295,
-  "fallecidos": 220057,
-  "hombres_fallecidos": 138868,
-  "mujeres_fallecidos": 81189,
+  "positivos": 4585360,
+  "hombres_infectados": 2208480,
+  "mujeres_infectados": 2376880,
+  "fallecidos": 220918,
+  "hombres_fallecidos": 139317,
+  "mujeres_fallecidos": 81601,
   "etapa_de_vida_fallecidos": {
-  "_id": "6445f3db853e134b040c46c0",
-    "primera_infancia": 743,
-    "infancia": 390,
-    "adolescencia": 594,
-    "juventud": 1751,
-    "adultez": 62984,
-    "persona_mayor": 153595
+    "primera_infancia": 758,
+    "infancia": 398,
+    "adolescencia": 601,
+    "juventud": 1760,
+    "adultez": 63207,
+    "persona_mayor": 154194
   },
-  "fecha": "2023-04-23T00:00:00.000Z"
+  "fecha": "2024-08-15"
 }
               `}
             </p>
@@ -95,7 +94,7 @@ const MainContent = ({main_content}) => {
       <div className="code date-pais">
         <h3 className={`text-normal-bg ${!isDarkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Estado en fecha específica</h3>
         <p className={`code__up text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Utilice tres parámetros "anio", "mes" y "dia" para obtener el estado del país en la fecha específica.</p>
-        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/pais?anio=2020&mes=3&dia=6</p></div>
+        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/pais?anio=2021&mes=3&dia=6</p></div>
         <p className={`code__down text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: El parametro "mes" tiene como mínimo y maximo valor el 1 y 12 respectivamente, el valor dependerá del orden del mes. La fecha mínima es 2020-03-06.</b></p>
         <div className="response">
           <pre>
@@ -104,22 +103,21 @@ const MainContent = ({main_content}) => {
 {
   "name": "peru",
   "poblacion": 32526084,
-  "positivos": 2024,
-  "hombres_infectados": 1053,
-  "mujeres_infectados": 971,
-  "fallecidos": 2,
-  "hombres_fallecidos": 2,
-  "mujeres_fallecidos": 0,
+  "positivos": 1396032,
+  "hombres_infectados": 721082,
+  "mujeres_infectados": 674950,
+  "fallecidos": 129189,
+  "hombres_fallecidos": 83092,
+  "mujeres_fallecidos": 46097,
   "etapa_de_vida_fallecidos": {
-    "_id": "6431a13b4dec3e31db0682be",
-    "primera_infancia": 0,
-    "infancia": 0,
-    "adolescencia": 0,
-    "juventud": 0,
-    "adultez": 0,
-    "persona_mayor": 2
+    "primera_infancia": 380,
+    "infancia": 216,
+    "adolescencia": 294,
+    "juventud": 994,
+    "adultez": 36000,
+    "persona_mayor": 91305
   },
-  "fecha": "2020-03-06T00:00:00.000Z"
+  "fecha": "2021-03-06"
 }
               `}
             </p>
@@ -274,9 +272,9 @@ const MainContent = ({main_content}) => {
       </div>
       <div className="code name-departamento">
         <h3 className={`text-normal-bg ${!isDarkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Estado de un departamento por nombre</h3>
-        <p className={`code__up text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información del estado actual de un departamento por su nombre. Ej. "San martin" ó "Madre de Dios".</p>
-        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/departamentos/san martin</p></div>
-        <p className={`code__down text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: Estos nombres no deben de llevar tilde ni carácteres especiales</b></p>
+        <p className={`code__up text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información del estado actual de un departamento por su nombre. Ej. "San Martin" ó "Madre de Dios".</p>
+        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/departamentos/San Martin</p></div>
+        <p className={`code__down text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: Estos departamentos no deben de llevar tilde ni carácteres especiales</b></p>
         <div className="response">
             <pre>
               <p>
@@ -292,7 +290,6 @@ const MainContent = ({main_content}) => {
 "mujeres_fallecidos": 1156,
 "type": "Departamento",
 "etapa_de_vida_fallecidos": {
-  "_id": "6445f3db853e134b040c484a",
   "primera_infancia": 22,
   "infancia": 12,
   "adolescencia": 15,
@@ -300,7 +297,7 @@ const MainContent = ({main_content}) => {
   "adultez": 946,
   "persona_mayor": 2203
 },
-"fecha": "2023-04-23T00:00:00.000Z"
+"fecha": "2023-04-23"
 }
               `}
               </p>
@@ -312,32 +309,30 @@ const MainContent = ({main_content}) => {
         <h3 className={`text-normal-bg ${!isDarkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Estado de un departamento aleatorio</h3>
         <p className={`code__up text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para solicitar el estado actual de un departamento aleatorio.</p>
         <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/departamentos/random</p></div>
-        <p className={`code__down text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: Estos nombres no deben de llevar tilde ni carácteres especiales</b></p>
 
         <div className="response">
             <pre>
               <p>
               {`
 {
-"name": "piura",
-"poblacion": 1901896,
-"positivos": 181579,
-"hombres_infectados": 86797,
-"mujeres_infectados": 94782,
-"fallecidos": 13236,
-"hombres_fallecidos": 8297,
-"mujeres_fallecidos": 4939,
+"name": "ucayali",
+"poblacion": 518190,
+"positivos": 46207,
+"hombres_infectados": 21151,
+"mujeres_infectados": 25056,
+"fallecidos": 3312,
+"hombres_fallecidos": 2121,
+"mujeres_fallecidos": 1191,
 "type": "Departamento",
 "etapa_de_vida_fallecidos": {
-  "_id": "6445f3db853e134b040c481c",
-  "primera_infancia": 64,
-  "infancia": 24,
-  "adolescencia": 40,
-  "juventud": 96,
-  "adultez": 3557,
-  "persona_mayor": 9455
+  "primera_infancia": 42,
+  "infancia": 27,
+  "adolescencia": 18,
+  "juventud": 66,
+  "adultez": 1028,
+  "persona_mayor": 2131
 },
-"fecha": "2023-04-23T00:00:00.000Z"
+"fecha": "2024-08-15"
 }
               `}
               </p>
@@ -496,14 +491,13 @@ const MainContent = ({main_content}) => {
       <div className="name-provincia code">
         <h3 className={`text-normal-bg ${!isDarkMode ? 'text-secondary': 'text-secondary-dark'}`} style={{letterSpacing: "3px"}}>Estado de una provincia por nombre</h3>
         <p className={`code__up text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}>Endpoint para recuperar información del estado actual de una provincia por su nombre. Ej. "Huaura" ó "Junin".</p>
-        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/provincias/san antonio de putina</p></div>
+        <div className="request"><p>{process.env.REACT_APP_BACKEND_URL}/api/provincias/San Antonio De Putina</p></div>
         <p className={`code__down text-normal ${!isDarkMode ? 'text-primary': 'text-primary-dark'}`}><b>NOTA: Estos nombres no deben de llevar tilde ni carácteres especiales</b></p>
         <div className="response">
             <pre>
               <p>
               {`
 {
-  "_id": "64474a8bbb168e49dc857843",
   "name": "san antonio de putina",
   "poblacion": 71977,
   "positivos": 1192,
@@ -514,7 +508,6 @@ const MainContent = ({main_content}) => {
   "mujeres_fallecidos": 16,
   "type": "Provincia",
   "etapa_de_vida_fallecidos": {
-    "_id": "64474a8bbb168e49dc857844",
     "primera_infancia": 1,
     "infancia": 1,
     "adolescencia": 2,
@@ -522,7 +515,7 @@ const MainContent = ({main_content}) => {
     "adultez": 27,
     "persona_mayor": 31
   },
-  "fecha": "2023-04-24T00:00:00.000Z"
+  "fecha": "2023-04-24"
 }
               `}
               </p>
@@ -540,7 +533,6 @@ const MainContent = ({main_content}) => {
               <p>
               {`
 {
-  "_id": "64474a8bbb168e49dc857797",
   "name": "lauricocha",
   "poblacion": 39728,
   "positivos": 389,
@@ -551,7 +543,6 @@ const MainContent = ({main_content}) => {
   "mujeres_fallecidos": 16,
   "type": "Provincia",
   "etapa_de_vida_fallecidos": {
-    "_id": "64474a8bbb168e49dc857798",
     "primera_infancia": 0,
     "infancia": 0,
     "adolescencia": 0,
@@ -559,7 +550,7 @@ const MainContent = ({main_content}) => {
     "adultez": 15,
     "persona_mayor": 36
   },
-  "fecha": "2023-04-24T00:00:00.000Z"
+  "fecha": "2023-04-24"
 }
               `}
               </p>
