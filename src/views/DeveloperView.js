@@ -177,7 +177,10 @@ const Developer = () => {
   const scrollDown = (e) => {
     const height_navbar = document.querySelector(".navbar").getBoundingClientRect().height;  
     const distance = document.querySelector(`.${e.currentTarget.dataset.class}`).getBoundingClientRect().top;
-    main_content.current.scrollTo({top: distance + main_content.current.scrollTop - height_navbar, behavior: "smooth"});
+    main_content.current.scrollTo({
+			top: distance + main_content.current.scrollTop - height_navbar,
+			behavior: "smooth",
+		});
   }
       
   return (
